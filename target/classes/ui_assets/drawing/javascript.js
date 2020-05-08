@@ -59,7 +59,7 @@ $(document).ready(function () {
         console.log("got response");
         if (status === "success") {
             console.log(data);
-            window.location.replace("http://localhost:9000/waiting_room");
+            window.location.replace("./waiting_room");
         } else {
             alert("Error connecting to the server " + status);
         }

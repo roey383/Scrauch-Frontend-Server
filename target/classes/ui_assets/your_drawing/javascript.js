@@ -108,7 +108,7 @@ $(document).ready(function () {
             console.log(data);
             newGroupSucces = document.getElementById("new_group_succes");
             newGroupSucces.innerHTML = data + " קוד קבוצה";
-            window.location.replace("http://localhost:9000/join_game");
+            window.location.replace("./join_game");
         } else {
             alert("Error connecting to the server " + status);
         }

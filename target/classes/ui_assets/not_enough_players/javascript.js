@@ -12,7 +12,7 @@ $(document).ready(function () {
     setTimeout(redirect, interval);
 
     function redirect(){
-        window.location.replace("http://localhost:9000");
+        window.location.replace("./");
     }
     
 

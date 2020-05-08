@@ -36,7 +36,7 @@ $(document).ready(function () {
         if (status === "success") {
             console.log(data);
             if (data.is_continue === true) {
-                window.location.replace("http://localhost:9000" + data.url_redirection);
+                window.location.replace("." + data.url_redirection);
             }
         } else {
             alert("Error connecting to the server " + status);

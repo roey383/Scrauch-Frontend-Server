@@ -61,7 +61,7 @@ $(document).ready(function () {
         console.log("got response");
         if (status === "success") {
             console.log(data);
-            window.location.replace("http://localhost:9000" + data.url_redirection);
+            window.location.replace("." + data.url_redirection);
         } else {
             alert("Error connecting to the server " + status);
         }

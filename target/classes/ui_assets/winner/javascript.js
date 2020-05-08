@@ -40,7 +40,7 @@ $(document).ready(function () {
         if (status === "success") {
             console.log(data);
             if (data.is_continue === true){
-                window.location.replace("http://localhost:9000" + data.url_redirection);
+                window.location.replace("." + data.url_redirection);
                 // "http://localhost:9000/personal_info"
             }
         } else {

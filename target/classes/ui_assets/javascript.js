@@ -32,7 +32,12 @@ $(document).ready(function () {
     button_join_group.on("click", function () {
         banner.addClass("alt");
         console.log("clicked");
+        console.log(gameCodeBox.val());
+        var gameCode = gameCodeBox.val();
 
+        if (gameCode === null) {
+            return;
+        }
         // send request to the server
         $.ajax({
             method: "POST",
@@ -72,12 +77,7 @@ $(document).ready(function () {
     }
 
     function createRequestJoinGroup() {
-
-        var gameCode = gameCodeBox.val();
-
-        if (isNaN(gameCode)) {
-            gameCode = 2;
-        }
+        var gameCode = gameCodeBox.val()
         console.log(gameCode);
         // Search request to the server
         var frontEndRequest = {
@@ -93,7 +93,7 @@ $(document).ready(function () {
         console.log("got response");
         if (status === "success") {
             console.log(data);
-            window.location.replace("http://localhost:9000/waiting_room");
+            window.location.replace("./waiting_room");
         } else {
             alert("Error connecting to the server " + status);
         }
@@ -103,7 +103,7 @@ $(document).ready(function () {
         console.log("got response");
         if (status === "success") {
             console.log(data);
-            window.location.replace("http://localhost:9000/waiting_room");
+            window.location.replace("./waiting_room");
         } else {
             alert("Error connecting to the server " + status);
         }

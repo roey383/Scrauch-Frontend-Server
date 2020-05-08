@@ -92,14 +92,14 @@ public class DataHandlers {
 		}
 		case JOIN_GAME_ENDPOINT: {
 			Application.logger.info("user " + data.getUserId() + " request to join game " + data.getGameCode());
-			Long id1 = Long.parseLong("880398900877000300");
-			Long id2 = Long.parseLong("481654656413539800");
-			String gameCode = userStage.getGameCode(data.getUserId() == id1 ? id2 : id1);
-			int playersLeft = scrouchLogic.joinPlayerToGame(data.getUserId(), /* data.getGameCode() */gameCode);
+//			Long id1 = Long.parseLong("880398900877000300");
+//			Long id2 = Long.parseLong("481654656413539800");
+//			String gameCode = userStage.getGameCode(data.getUserId() == id1 ? id2 : id1);
+			int playersLeft = scrouchLogic.joinPlayerToGame(data.getUserId(), data.getGameCode() /* gameCode */);
 			HtmlData htmlData = new HtmlData(data.getUserId(), UserStageMonitor.WAITING_ROOM_JOINERS,
-					/* data.getGameCode() */gameCode);
+					data.getGameCode() /* gameCode */);
 			Application.logger.info(htmlData + ". left " + playersLeft + " players");
-			userStage.addUser(data.getUserId(), /* data.getGameCode() */gameCode);
+			userStage.addUser(data.getUserId(), data.getGameCode() /* gameCode */);
 			userStage.setStageData(data.getUserId(), htmlData);
 			if (playersLeft == 0) {
 				userStage.setUpFromWaitingRoom(data.getUserId());

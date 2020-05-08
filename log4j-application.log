@@ -5011,3 +5011,99 @@ isTrueSentence=true]
 2020-05-08 11:05:21 INFO  Application:103 - reads assest /ui_assets/drawing/style.css
 2020-05-08 11:05:21 INFO  Application:103 - reads assest /ui_assets/drawing/javascript.js
 2020-05-08 11:05:21 INFO  Application:103 - reads assest /ui_assets/dist/atrament.min.js
+2020-05-08 12:12:01 INFO  Application:30 - Server is listening on port 9000
+2020-05-08 12:12:28 INFO  Application:72 - /10.100.102.7:57564 has connected to website
+2020-05-08 12:12:28 INFO  Application:103 - reads assest /ui_assets//index.html
+2020-05-08 12:12:29 INFO  Application:103 - reads assest /ui_assets/style.css
+2020-05-08 12:12:29 INFO  Application:103 - reads assest /ui_assets/javascript.js
+2020-05-08 12:13:16 INFO  Application:72 - /10.100.102.7:53519 has connected to website
+2020-05-08 12:13:16 INFO  Application:103 - reads assest /ui_assets//index.html
+2020-05-08 12:13:16 INFO  Application:103 - reads assest /ui_assets/javascript.js
+2020-05-08 12:13:16 INFO  Application:103 - reads assest /ui_assets/style.css
+2020-05-08 12:13:35 INFO  Application:77 - user 916297508445382800 request to create game with num of players = 2, sessions = 1
+2020-05-08 12:13:35 INFO  Application:83 - HtmlData: userId = 916297508445382800, stage = waiting_room_joiners, gameCode = K0Y4Y . left 1 players
+2020-05-08 12:13:35 INFO  Application:41 - user Id = 916297508445382800 is on ui_assets/waiting_room/index.html page
+2020-05-08 12:13:36 INFO  Application:65 - 916297508445382800 is on loading html page
+2020-05-08 12:13:36 INFO  Application:67 - got #waiting_cause=ElementData [type=text, attr=, value=מחכים לכולם שיצטרפו] to populate
+2020-05-08 12:13:36 INFO  Application:71 - #waiting_cause=ElementData [type=text, attr=, value=מחכים לכולם שיצטרפו] added
+2020-05-08 12:13:36 INFO  Application:67 - got #code_group_is=ElementData [type=text, attr=, value=K0Y4Y קוד הקבוצה הוא] to populate
+2020-05-08 12:13:36 INFO  Application:71 - #code_group_is=ElementData [type=text, attr=, value=K0Y4Y קוד הקבוצה הוא] added
+2020-05-08 12:13:36 INFO  Application:77 - /10.100.102.7:53519 loaded assestui_assets/waiting_room/index.html
+2020-05-08 12:13:36 INFO  Application:103 - reads assest /ui_assets/waiting_room/style.css
+2020-05-08 12:13:36 INFO  Application:103 - reads assest /ui_assets/waiting_room/javascript.js
+2020-05-08 12:13:36 INFO  Application:112 - request to check if continue
+2020-05-08 12:13:39 INFO  Application:112 - request to check if continue
+2020-05-08 12:13:42 INFO  Application:112 - request to check if continue
+2020-05-08 12:13:45 INFO  Application:112 - request to check if continue
+2020-05-08 12:13:47 INFO  Application:94 - user 339790727923080500 request to join game K0Y4Y 
+2020-05-08 12:13:48 INFO  Application:112 - request to check if continue
+2020-05-08 12:13:51 INFO  Application:112 - request to check if continue
+2020-05-08 12:13:54 INFO  Application:112 - request to check if continue
+2020-05-08 12:13:54 INFO  Application:94 - user 339790727923080500 request to join game K0Y4Y
+2020-05-08 12:13:57 INFO  Application:112 - request to check if continue
+2020-05-08 12:14:00 INFO  Application:112 - request to check if continue
+2020-05-08 12:14:03 INFO  Application:112 - request to check if continue
+2020-05-08 12:14:06 INFO  Application:112 - request to check if continue
+2020-05-08 12:14:09 INFO  Application:112 - request to check if continue
+2020-05-08 12:14:12 INFO  Application:112 - request to check if continue
+2020-05-08 12:14:15 INFO  Application:112 - request to check if continue
+2020-05-08 12:14:17 INFO  Application:94 - user 339790727923080500 request to join game K0Y4Y
+2020-05-08 12:14:18 INFO  Application:112 - request to check if continue
+2020-05-08 12:14:21 INFO  Application:112 - request to check if continue
+2020-05-08 12:14:24 INFO  Application:112 - request to check if continue
+2020-05-08 12:14:27 INFO  Application:112 - request to check if continue
+2020-05-08 12:14:30 INFO  Application:112 - request to check if continue
+2020-05-08 12:14:33 INFO  Application:112 - request to check if continue
+2020-05-08 12:14:36 INFO  Application:94 - user 339790727923080500 request to join game K0Y4Y
+2020-05-08 12:14:36 INFO  Application:112 - request to check if continue
+2020-05-08 12:14:39 INFO  Application:112 - request to check if continue
+2020-05-08 12:14:42 INFO  Application:112 - request to check if continue
+2020-05-08 12:14:45 INFO  Application:112 - request to check if continue
+2020-05-08 12:14:48 INFO  Application:112 - request to check if continue
+2020-05-08 12:14:51 INFO  Application:112 - request to check if continue
+2020-05-08 12:14:54 INFO  Application:112 - request to check if continue
+2020-05-08 12:14:57 INFO  Application:112 - request to check if continue
+2020-05-08 12:15:00 INFO  Application:112 - request to check if continue
+2020-05-08 12:15:04 INFO  Application:112 - request to check if continue
+2020-05-08 12:15:07 INFO  Application:112 - request to check if continue
+2020-05-08 12:15:08 INFO  Application:94 - user 339790727923080500 request to join game K0Y4Y
+2020-05-08 12:15:08 INFO  Application:94 - user 339790727923080500 request to join game K0Y4Y
+2020-05-08 12:15:10 INFO  Application:112 - request to check if continue
+2020-05-08 12:15:11 INFO  Application:77 - user 339790727923080500 request to create game with num of players = 2, sessions = 2
+2020-05-08 12:15:11 INFO  Application:83 - HtmlData: userId = 339790727923080500, stage = waiting_room_joiners, gameCode = QFDPO . left 1 players
+2020-05-08 12:15:11 INFO  Application:41 - user Id = 339790727923080500 is on ui_assets/waiting_room/index.html page
+2020-05-08 12:15:11 INFO  Application:65 - 339790727923080500 is on loading html page
+2020-05-08 12:15:11 INFO  Application:67 - got #waiting_cause=ElementData [type=text, attr=, value=מחכים לכולם שיצטרפו] to populate
+2020-05-08 12:15:11 INFO  Application:71 - #waiting_cause=ElementData [type=text, attr=, value=מחכים לכולם שיצטרפו] added
+2020-05-08 12:15:11 INFO  Application:67 - got #code_group_is=ElementData [type=text, attr=, value=QFDPO קוד הקבוצה הוא] to populate
+2020-05-08 12:15:11 INFO  Application:71 - #code_group_is=ElementData [type=text, attr=, value=QFDPO קוד הקבוצה הוא] added
+2020-05-08 12:15:11 INFO  Application:77 - /10.100.102.7:53548 loaded assestui_assets/waiting_room/index.html
+2020-05-08 12:15:11 INFO  Application:103 - reads assest /ui_assets/waiting_room/style.css
+2020-05-08 12:15:11 INFO  Application:103 - reads assest /ui_assets/waiting_room/javascript.js
+2020-05-08 12:15:11 INFO  Application:112 - request to check if continue
+2020-05-08 12:15:13 INFO  Application:112 - request to check if continue
+2020-05-08 12:15:14 INFO  Application:112 - request to check if continue
+2020-05-08 12:15:16 INFO  Application:112 - request to check if continue
+2020-05-08 12:15:17 INFO  Application:112 - request to check if continue
+2020-05-08 12:15:19 INFO  Application:112 - request to check if continue
+2020-05-08 12:15:20 INFO  Application:112 - request to check if continue
+2020-05-08 12:15:22 INFO  Application:112 - request to check if continue
+2020-05-08 12:15:23 INFO  Application:112 - request to check if continue
+2020-05-08 12:15:25 INFO  Application:112 - request to check if continue
+2020-05-08 12:15:26 INFO  Application:72 - /10.100.102.7:53521 has connected to website
+2020-05-08 12:15:26 INFO  Application:103 - reads assest /ui_assets//index.html
+2020-05-08 12:15:26 INFO  Application:112 - request to check if continue
+2020-05-08 12:15:30 INFO  Application:94 - user 916297508445382800 request to join game QFDPO
+2020-05-08 12:15:30 INFO  Application:94 - user 916297508445382800 request to join game QFDPO
+2020-05-08 12:15:30 INFO  Application:94 - user 916297508445382800 request to join game QFDPO
+2020-05-08 12:15:30 INFO  Application:112 - request to check if continue
+2020-05-08 12:15:33 INFO  Application:112 - request to check if continue
+2020-05-08 12:15:33 INFO  Application:94 - user 916297508445382800 request to join game QFDPO
+2020-05-08 12:15:36 INFO  Application:112 - request to check if continue
+2020-05-08 12:15:39 INFO  Application:112 - request to check if continue
+2020-05-08 12:15:42 INFO  Application:112 - request to check if continue
+2020-05-08 12:15:45 INFO  Application:112 - request to check if continue
+2020-05-08 12:15:48 INFO  Application:112 - request to check if continue
+2020-05-08 12:15:51 INFO  Application:112 - request to check if continue
+2020-05-08 12:15:59 INFO  Application:30 - Server is listening on port 9000
+2020-05-08 12:15:59 INFO  Application:112 - request to check if continue
