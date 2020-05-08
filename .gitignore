@@ -1,0 +1,4 @@
+/target/*
+/src/main/resources/ui_assets/images/
+/target/
+/src/main/resources/ui_assets/images/*
