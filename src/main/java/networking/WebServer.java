@@ -74,7 +74,7 @@ public class WebServer {
 			} else {
 				long userId = Long.parseLong(exchange.getRequestHeaders().get("Cookie").get(0).split("=")[1]);
 				response = HtmlBuilder.loadHtml(path, userId);
-				Application.logger.info(exchange.getLocalAddress() + " loaded assest" + path);
+				Application.logger.info(exchange.getRemoteAddress() + " loaded assest" + path);
 //            	response = readUiAsset(path);
 			}
 		} else {
