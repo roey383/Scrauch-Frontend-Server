@@ -1,0 +1,54 @@
+body {
+  background: #e6f3ff;
+  padding: 20px;
+  font-family: Helvetica;
+}
+
+#layout {
+  background: #fff;
+  border-radius: 4px;
+  padding: 20px 20px 50px;
+  font-size: 25px;
+  text-align: center;
+  transition: all 0.2s;
+  margin: 0 auto;
+  width: 750px;
+}
+
+#blue {
+  float: left;
+  /* margin-left:100px; */
+}
+#sketchpad {
+  /* float: left; */
+  margin-left:-120px;
+
+  /* padding: 0px 0px 0px 0px; */
+}
+
+
+#red {
+  float: left;
+}
+
+#yellow {
+  float: left;
+}
+input {
+  height: 30px;
+  padding: 0px;
+  margin: 0px;
+  font-size: 25px;
+}
+
+
+button {
+  background: #0084ff;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 14px;
+  font-size: 15px;
+  color: #fff;
+  height: 30px;
+}
+

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Scrouch-Social_Game</title>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <link rel="stylesheet" type="text/css" href="/ui_assets/style.css">
+    <script type="text/javascript" src="/ui_assets/javascript.js"></script>
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+</head>
+<meta charset="utf-8">
+
+<body>
+    <div id="layout">
+        <h1>Scrouch Game</h1>
+
+        <br />
+        <div id="new_group_head">
+            <h1>קבוצה חדשה</h1>
+        </div>
+        <div id="group_options">
+            :מספר משתתפים<br />
+            <input type="text" id="num_of_players" class="num_input"><br />
+            :מספר סיבובים<br />
+            <input type="text" id="num_of_sessions" class="num_input">
+            <div>
+                <button id="submit_button_create_group">יצירת קבוצה</button>
+            </div>
+            <br>
+            <div id="new_group_succes">
+
+            </div>
+        </div>
+        <div id="join_group_head">
+            <h1>הצטרף לקבוצה</h1>
+        </div>
+        <div id="enter_code_group">
+            :הקלד קוד קבוצה<br />
+            <input type="text" id="code_group">
+            <button id="submit_button_join_group">הצטרף</button>
+            <div id="join_group_succes">
+                <tr>
+                    הולך להצטרף לקבוצה
+                </tr>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
