@@ -15,6 +15,11 @@ body {
   width: 750px;
 }
 
+#winner{
+  /* height: 30px; */
+  font-size: 100px;
+}
+
 #info_col_0{
   display: inline-block;
 }

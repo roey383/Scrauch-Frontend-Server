@@ -14,10 +14,25 @@ body {
   margin: 0 auto;
   width: 750px;
 }
-
-input {
+#num_of_players, #num_of_sessions {
   height: 25px;
+  width: 30px;
+  font-size: 20px;
+  text-align: center;
+  padding-right: 5px;
 }
+
+#code_group {
+  height: 25px;
+  width: 65px;
+  font-size: 20px;
+  padding: 3px;
+}
+/* input {
+  height: 25px;
+  width: 100px;
+  font-size: 20px;
+} */
 
 #search_text {
   width: 300px;
@@ -25,6 +40,13 @@ input {
 
 .num_input {
   width: 50px;
+}
+
+#of_button{
+  padding: 10px 20px;
+}
+#of_rounds{
+  padding: 10px 20px;
 }
 
 button {

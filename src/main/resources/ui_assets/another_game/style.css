@@ -32,8 +32,11 @@ button {
   border: none;
   border-radius: 5px;
   padding: 8px 14px;
-  font-size: 15px;
+  font-size: 25px;
   color: #fff;
+  height:50px;
+  width :50px;
+  text-align: center;
 }
 
 #banner-message.alt {
@@ -46,30 +49,4 @@ button {
 #banner-message.alt button {
   background: #fff;
   color: #000;
-}
-
-#results {
-  display: none;
-  white-space: pre-wrap;
-}
-
-/* #new_group_succes {
-  display: none;
-} */
-
-#join_group_succes {
-  display: none;
-}
-/* 
-#group_options {
-  display: none;
-}
-
-#enter_code_group {
-  display: none;
-} */
-
-#results table {
-  margin-left:auto;
-  margin-right:auto;
 }

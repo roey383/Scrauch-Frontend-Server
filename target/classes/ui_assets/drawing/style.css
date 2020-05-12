@@ -24,7 +24,11 @@ body {
   margin-left:-120px;
 }
 
-
+#submit_button{
+  height: 50px;
+  width: 80px;
+  font-size: 25px;
+}
 #red {
   float: left;
 }

@@ -15,6 +15,15 @@ body {
   width: 750px;
 }
 
+
+#false_sentence {
+  height: 25px;
+  width: 250px;
+  font-size: 20px;
+  text-align: right;
+  padding-right: 5px;
+}
+
 input {
   height: 25px;
 }

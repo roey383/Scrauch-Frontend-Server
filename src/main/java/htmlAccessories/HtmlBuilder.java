@@ -41,13 +41,11 @@ public class HtmlBuilder {
 		if (htmlInputStream == null) {
 			return new byte[] {};
 		}
-		
-		
 
 		Document document = Jsoup.parse(htmlInputStream, "UTF-8", "");
 
 		String modifiedHtml = populateHtmlDocument(document, htmlData);
-		
+
 		return modifiedHtml.getBytes("UTF-8");
 	}
 
@@ -169,31 +167,13 @@ public class HtmlBuilder {
 			int col = -1;
 			for (Result result : htmlData.getResults()) {
 				col++;
-				elementToValue.put(ConfigServer.getProperty(ConfigServer.ELEMENT_RESULT_HEAD) + col, new ElementData(
-						ElementActionType.TEXT, ConfigServer.getProperty(ConfigServer.RESULT_HEAD_FALSER)));
-				elementToValue.put(ConfigServer.getProperty(ConfigServer.ELEMENT_SENTENCE_RESULT) + col,
-						new ElementData(ElementActionType.TEXT, result.getSentence()));
-				elementToValue.put(ConfigServer.getProperty(ConfigServer.ELEMENT_PLAYER_NAME) + col,
-						new ElementData(ElementActionType.TEXT, result.getPlayer().getName()));
-				elementToValue.put(ConfigServer.getProperty(ConfigServer.ELEMENT_SCORE_RESULT) + col,
-						new ElementData(ElementActionType.TEXT,
-								Integer.toString(result.getPointsCollectPerHead() * result.getChoosers().size())));
-				elementToValue.put(ConfigServer.getProperty(ConfigServer.ELEMENT_CHOOSERS_RESULT) + col,
-						new ElementData(ElementActionType.TEXT, buildChoosersString(result.getChoosers())));
-				if (result.isTrueSentence()) {
-					elementToValue.put(ConfigServer.getProperty(ConfigServer.ELEMENT_RESULT_HEAD) + col,
-							new ElementData(ElementActionType.TEXT,
-									ConfigServer.getProperty(ConfigServer.RESULT_HEAD_TRUE)));
-					elementToValue.put(ConfigServer.getProperty(ConfigServer.ELEMENT_CHOOSERS_WON) + col,
-							new ElementData(ElementActionType.TEXT,
-									String.format(ConfigServer.getProperty(ConfigServer.CHOOSERS_WON_EACH),
-											buildChoosersString(result.getChoosers()),
-											result.getPointsEarnedForHead())));
-				}
+				elementToValue.put(ConfigServer.getProperty(ConfigServer.ELEMENT_INFO_COLUMN) + col,
+						new ElementData(ElementActionType.ELEMENT, generateResultElement(result).toString()));
 			}
 			Application.logger
 					.info(htmlData.getUserId() + " got elementToValue " + elementToValue.entrySet().toString());
 			break;
+
 		}
 		case UserStageMonitor.LAST_ROUND_SCORES: {
 
@@ -214,10 +194,10 @@ public class HtmlBuilder {
 			elementToValue.put(ConfigServer.getProperty(ConfigServer.ELEMENT_WAITING_CAUSE), new ElementData(
 					ElementActionType.TEXT, ConfigServer.getProperty(ConfigServer.WAITING_FOR_SEE_SCORES)));
 			break;
-			
+
 		case UserStageMonitor.WINNER:
-			elementToValue.put(ConfigServer.getProperty(ConfigServer.ELEMENT_WINNER), new ElementData(
-					ElementActionType.TEXT, htmlData.getWinner().getName()));
+			elementToValue.put(ConfigServer.getProperty(ConfigServer.ELEMENT_WINNER),
+					new ElementData(ElementActionType.TEXT, htmlData.getWinner().getName()));
 			break;
 
 		case UserStageMonitor.WAITING_ROOM_DECIDING:
@@ -238,32 +218,31 @@ public class HtmlBuilder {
 				: ConfigServer.getProperty(ConfigServer.DRAWING_POSTFIX);
 //		String baseDir = type.equals("profil") ? ConfigServer.getProperty(ConfigServer.IMAGES_PROFIL_BASE_DIR)
 //				: ConfigServer.getProperty(ConfigServer.IMAGES_DRAWING_BASE_DIR);
-		String imagePath = /*baseDir + */ id + postfix/* + new Random().nextInt(1000)*/ + "."
+		String imagePath = /* baseDir + */ id + postfix/* + new Random().nextInt(1000) */ + "."
 				+ ConfigServer.getProperty(ConfigServer.IMAGE_FILE_TYPE);
-		
+
 		Application.logger.info("image path: " + imagePath);
 		File dir = new File("images");
 		if (!dir.exists()) {
 			Application.logger.info("creating directory: " + dir.getName());
-		    boolean result = false;
+			boolean result = false;
 
-		    try{
-		        dir.mkdir();
-		        result = true;
-		    } 
-		    catch(SecurityException se){
-		        //handle it
-		    }        
-		    if(result) {    
-		    	Application.logger.info("DIR created");  
-		    }
-			
+			try {
+				dir.mkdir();
+				result = true;
+			} catch (SecurityException se) {
+				// handle it
+			}
+			if (result) {
+				Application.logger.info("DIR created");
+			}
+
 		}
-        String fullPath = new File(dir + "/" + imagePath).getAbsolutePath();
-        Application.logger.info("image absolutePath : " + fullPath);
+		String fullPath = new File(dir + "/" + imagePath).getAbsolutePath();
+		Application.logger.info("image absolutePath : " + fullPath);
 		ImageIO.write((RenderedImage) image, ConfigServer.getProperty(ConfigServer.IMAGE_FILE_TYPE),
 				new File(fullPath));
-		
+
 		return fullPath;
 	}
 
@@ -272,6 +251,38 @@ public class HtmlBuilder {
 		Element nameElement = new Element("div").html(name);
 		Element playerInfoElement = new Element("div").append(img.toString()).append(nameElement.toString());
 		return playerInfoElement;
+	}
+
+	private static Element generateResultElement(Result result) {
+		// TODO Auto-generated method stub
+
+		Element resultElement = new Element("div");
+		Element intro = new Element("div");
+		Element chosers = new Element("div");
+		Element winnerPoints = new Element("div");
+		Element pointsEarned = new Element("div");
+
+		if (!result.isTrueSentence()) {
+			intro.html(
+					String.format("את התיאור הכוזב \"%s\" כתב %s", result.getSentence(), result.getPlayer().getName()));
+		} else {
+			intro.html(String.format("המשפט האמיתי הוא \"%s\" ושייך ל%s", result.getSentence(),
+					result.getPlayer().getName()));
+		}
+		if (result.getChoosers().size() == 0) {
+			chosers.html("אף אחד לא בחר בו");
+			winnerPoints.html(result.getPlayer().getName() + " לא הרוויח אף נקודה");
+		} else {
+			chosers.html(String.format("בחרו בו: %s", buildChoosersString(result.getChoosers())));
+			winnerPoints.html(String.format("%s הרוויח סך הכל %d נקודות", result.getPlayer().getName(),
+					result.getPointsCollectPerHead() * result.getChoosers().size()));
+		}
+		if (result.isTrueSentence() && result.getChoosers().size() > 0) {
+			pointsEarned.html(String.format("כל אחד מהבוחרים זכה ב%d נקודות", result.getPointsEarnedForHead()));
+		}
+
+		return resultElement.append(intro.toString()).append("</br>").append(chosers.toString()).append("</br>")
+				.append(winnerPoints.toString()).append("</br>").append(pointsEarned.toString());
 	}
 
 	private static Element generateImageElement(String imagePath) {

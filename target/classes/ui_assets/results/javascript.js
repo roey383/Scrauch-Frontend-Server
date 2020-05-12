@@ -5,21 +5,21 @@ $(document).ready(function () {
     var banner = $("#banner-message");
     var userId;
     var results = new Array(9);
-    var heads = new Array(9);
+    // var heads = new Array(9);
     var button = $("#next_button");
     var j = 0;
     var max = 9;
 
     for (i = 0; i < 9; i++) {
         results[i] = $("#info_col_" + i);
-        heads[i] = $("#result_head_" + i);
+        // heads[i] = $("#result_head_" + i);
     }
 
 
     for (i = 0; i < 9; i++) {
         // console.log(results[i].val());
         console.log(i);
-        if(heads[i].is(":empty")){
+        if(results[i].is(":empty")){
             max = i;
             console.log("max: " + max);
             break;
@@ -31,7 +31,9 @@ $(document).ready(function () {
         banner.addClass("alt");
         console.log("clicked");
         if (j < max) {
-            results[j].hide();
+            if (j + 1 < max){
+                results[j].hide();
+            }
             j++;
         }
         if (j === max) {
