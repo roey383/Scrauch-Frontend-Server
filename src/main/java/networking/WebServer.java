@@ -66,15 +66,16 @@ public class WebServer {
 		String asset = exchange.getRequestURI().getPath();
 
 		if (asset.length() < 4 || !asset.substring(asset.length() - 4).contains(".")) {
-			String path = UI_ASSETS_BASE_DIR + asset + "/index.html";
+			String path = UI_ASSETS_BASE_DIR + asset;
 			if (asset.equals(HOME_PAGE_ENDPOINT)) {
-				String homePagePath = "/" + path;
+				String homePagePath = "/" + path + "index.html";;
 				Application.logger.info(exchange.getRemoteAddress() + " has connected to website");
 				response = readUiAsset(homePagePath);
 			} else {
 				long userId = Long.parseLong(exchange.getRequestHeaders().get("Cookie").get(0).split("=")[1]);
+				path = path + "/index.html";
 				response = HtmlBuilder.loadHtml(path, userId);
-				Application.logger.info(exchange.getRemoteAddress() + " loaded assest" + path);
+				Application.logger.info(exchange.getRemoteAddress() + " loaded assest " + path);
 //            	response = readUiAsset(path);
 			}
 		} else {
@@ -86,21 +87,29 @@ public class WebServer {
 	}
 
 	private byte[] readUiAsset(String asset) throws IOException  {
-//		InputStream assetStream = getClass().getResourceAsStream(asset);
-		InputStream assetStream;
-		try {
-			assetStream = new FileInputStream(RESOURCES_BASE_DIR + asset);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-//			e.printStackTrace();
-			return new byte[] {};
+		Application.logger.info("asset path: " + asset);
+		InputStream assetStream = null;
+		if (asset.contains(".png") || asset.contains("jpg")) {
+			try {
+				assetStream = new FileInputStream(/*RESOURCES_BASE_DIR + */asset);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+//				e.printStackTrace();
+				Application.logger.error("asset not found: " + e);
+				return new byte[] {};
+			}
+			
 		}
-//		System.out.println("reads asset: " + asset);
-//		if (assetStream == null) {
-//			
-//		}
+		else {
+			assetStream = getClass().getResourceAsStream(asset);
+			if (assetStream == null) {
+				Application.logger.error("asset not found: from getResource");
+				return new byte[] {};
+			}
+			
+		}
 	
-		Application.logger.info("reads assest " + asset);
+		Application.logger.info("assest read: " + asset);
 		byte[] stream = assetStream.readAllBytes();
 		assetStream.close();
 		return stream;

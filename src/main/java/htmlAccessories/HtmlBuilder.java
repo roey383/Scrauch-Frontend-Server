@@ -3,8 +3,6 @@ package htmlAccessories;
 import java.awt.Image;
 import java.awt.image.RenderedImage;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -24,7 +22,6 @@ import config.ConfigServer;
 import controller.UserStageMonitor;
 import logic.PlayerPersonalInfo;
 import logic.Result;
-import networking.WebServer;
 
 public class HtmlBuilder {
 
@@ -39,18 +36,13 @@ public class HtmlBuilder {
 
 		HtmlData htmlData = userStage.getHtmlData(userId);
 		Application.logger.info("user Id = " + userId + " is on " + htmlFilePath + " page");
-//		InputStream htmlInputStream = HtmlBuilder.class.getClassLoader().getResourceAsStream(htmlFilePath);
 		InputStream htmlInputStream;
-		try {
-			htmlInputStream = new FileInputStream(WebServer.RESOURCES_BASE_DIR + "/" + htmlFilePath);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-//			e.printStackTrace();
+		htmlInputStream = HtmlBuilder.class.getClassLoader().getResourceAsStream(htmlFilePath);
+		if (htmlInputStream == null) {
 			return new byte[] {};
 		}
-//		if (htmlInputStream == null) {
-//			return new byte[] {};
-//		}
+		
+		
 
 		Document document = Jsoup.parse(htmlInputStream, "UTF-8", "");
 
@@ -82,9 +74,6 @@ public class HtmlBuilder {
 
 	public static Set<Entry<String, ElementData>> buildElementsToValues(HtmlData htmlData) throws IOException {
 		// TODO Auto-generated method stub
-
-//		if (elementToValue != null || elementToChild != null)
-//			return;
 
 		Map<String, ElementData> elementToValue = new HashMap<String, ElementData>();
 
@@ -247,14 +236,35 @@ public class HtmlBuilder {
 		// TODO Auto-generated method stub
 		String postfix = type.equals("profil") ? ConfigServer.getProperty(ConfigServer.PROFIL_POSTFIX)
 				: ConfigServer.getProperty(ConfigServer.DRAWING_POSTFIX);
-		String baseDir = type.equals("profil") ? ConfigServer.getProperty(ConfigServer.IMAGES_PROFIL_BASE_DIR)
-				: ConfigServer.getProperty(ConfigServer.IMAGES_DRAWING_BASE_DIR);
-		String imagePath = baseDir + id + postfix /*+ new Random().nextInt(1000)*/ + "."
+//		String baseDir = type.equals("profil") ? ConfigServer.getProperty(ConfigServer.IMAGES_PROFIL_BASE_DIR)
+//				: ConfigServer.getProperty(ConfigServer.IMAGES_DRAWING_BASE_DIR);
+		String imagePath = /*baseDir + */ id + postfix/* + new Random().nextInt(1000)*/ + "."
 				+ ConfigServer.getProperty(ConfigServer.IMAGE_FILE_TYPE);
-		ImageIO.write((RenderedImage) image, ConfigServer.getProperty(ConfigServer.IMAGE_FILE_TYPE),
-				new File(ConfigServer.getProperty(ConfigServer.ASSETS_BASE_DIR) + imagePath));
 		
-		return imagePath;
+		Application.logger.info("image path: " + imagePath);
+		File dir = new File("images");
+		if (!dir.exists()) {
+			Application.logger.info("creating directory: " + dir.getName());
+		    boolean result = false;
+
+		    try{
+		        dir.mkdir();
+		        result = true;
+		    } 
+		    catch(SecurityException se){
+		        //handle it
+		    }        
+		    if(result) {    
+		    	Application.logger.info("DIR created");  
+		    }
+			
+		}
+        String fullPath = new File(dir + "/" + imagePath).getAbsolutePath();
+        Application.logger.info("image absolutePath : " + fullPath);
+		ImageIO.write((RenderedImage) image, ConfigServer.getProperty(ConfigServer.IMAGE_FILE_TYPE),
+				new File(fullPath));
+		
+		return fullPath;
 	}
 
 	private static Element generatePlayerInfoElement(String name, String imagePath) {

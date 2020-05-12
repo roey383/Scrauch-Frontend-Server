@@ -29,7 +29,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>app.TestApplicationByPlayers</mainClass>
+                            <mainClass>app.Application</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
