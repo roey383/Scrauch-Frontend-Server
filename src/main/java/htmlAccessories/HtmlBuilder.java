@@ -121,13 +121,18 @@ public class HtmlBuilder {
 
 			String imagePath = saveImageToResources(htmlData.getDrawingSentence().getDrawing(),
 					htmlData.getDrawingSentence().getPlayerId(), "drawing");
-			Element image = generateImageElement(imagePath);
+			Element image = generateImageElement(imagePath, ConfigServer.getProperty(ConfigServer.IMAGE_SIZE));
 			elementToValue.put(ConfigServer.getProperty(ConfigServer.ELEMENT_DRAWING),
 					new ElementData(ElementActionType.ELEMENT, image.toString()));
 			Application.logger.info(htmlData.getUserId() + image.toString());
 
 			break;
 		}
+
+		case UserStageMonitor.WAITING_ROOM_FALSING:
+			elementToValue.put(ConfigServer.getProperty(ConfigServer.ELEMENT_WAITING_CAUSE), new ElementData(
+					ElementActionType.TEXT, ConfigServer.getProperty(ConfigServer.WAITING_TO_FINISH_FALSING)));
+			break;
 
 		case UserStageMonitor.GUESSING: {
 			int i = -1;
@@ -139,7 +144,7 @@ public class HtmlBuilder {
 
 			String imagePath = saveImageToResources(htmlData.getDrawingSentence().getDrawing(),
 					htmlData.getDrawingSentence().getPlayerId(), "drawing");
-			Element image = generateImageElement(imagePath);
+			Element image = generateImageElement(imagePath, ConfigServer.getProperty(ConfigServer.IMAGE_SIZE));
 			elementToValue.put(ConfigServer.getProperty(ConfigServer.ELEMENT_DRAWING),
 					new ElementData(ElementActionType.ELEMENT, image.toString()));
 			Application.logger.info(htmlData.getUserId() + image.toString());
@@ -247,7 +252,7 @@ public class HtmlBuilder {
 	}
 
 	private static Element generatePlayerInfoElement(String name, String imagePath) {
-		Element img = generateImageElement(imagePath);
+		Element img = generateImageElement(imagePath, ConfigServer.getProperty(ConfigServer.PROFIL_SIZE));
 		Element nameElement = new Element("div").html(name);
 		Element playerInfoElement = new Element("div").append(img.toString()).append(nameElement.toString());
 		return playerInfoElement;
@@ -285,10 +290,10 @@ public class HtmlBuilder {
 				.append(winnerPoints.toString()).append("</br>").append(pointsEarned.toString());
 	}
 
-	private static Element generateImageElement(String imagePath) {
+	private static Element generateImageElement(String imagePath, String size) {
 		Element img = new Element("img").attr("src", imagePath)
-				.attr("height", ConfigServer.getProperty(ConfigServer.PROFIL_HEIGHT))
-				.attr("width", ConfigServer.getProperty(ConfigServer.PROFIL_WIDTH));
+				.attr("height", size)
+				.attr("width", size);
 		return img;
 	}
 

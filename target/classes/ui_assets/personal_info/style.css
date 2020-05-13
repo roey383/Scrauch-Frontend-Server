@@ -15,25 +15,34 @@ body {
   width: 750px;
 }
 
-#blue {
-  float: left;
-  /* margin-left:100px; */
-}
 #sketchpad {
   /* float: left; */
-  margin-left:-120px;
+  margin-left:-70px;
+}
+
+#colors {
+  float: left;
+  margin-left:40px;
+}
+
+#sketchpad {
+  /* float: left; */
+  margin-left:-80px;
 
   /* padding: 0px 0px 0px 0px; */
 }
 
-
+/* 
+#blue {
+  float: left;
+}
 #red {
   float: left;
 }
 
 #yellow {
   float: left;
-}
+} */
 input {
   height:30px;
   padding: 0px;

@@ -20,8 +20,8 @@ public class ConfigServer {
 	public static final String IMAGES_DRAWING_BASE_DIR = "images_drawing_base_dir";
 	public static final String DRAWING_POSTFIX = "drawing_postfix";
 	public static final String ELEMENT_INFO_COLUMN = "element_info_column";
-	public static final String PROFIL_WIDTH = "profil_width";
-	public static final String PROFIL_HEIGHT = "profil_height";
+//	public static final String PROFIL_WIDTH = "profil_width";
+//	public static final String PROFIL_HEIGHT = "profil_height";
 	public static final String ELEMENT_TRUE_SENTENCE = "element_true_sentence";
 	public static final String ELEMENT_DRAWING = "element_drawing";
 	public static final String WAITING_TO_FINISH_DRAWING = "waiting_to_finish_drawing";
@@ -50,6 +50,9 @@ public class ConfigServer {
 	public static final String WAITING_FOR_DECIDERS = "waiting_for_deciders";
 	public static final String WAITING_FOR_SEE_SCORES = "waiting_for_see_scores";
 	public static final String ELEMENT_WINNER = "element_winner";
+	public static final String IMAGE_SIZE = "image_size";
+	public static final String PROFIL_SIZE = "profil_size";
+	public static final String WAITING_TO_FINISH_FALSING = "waiting_to_finish_flasing";
 
 	public static Properties configFile;
 	public static InputStream inputStream;

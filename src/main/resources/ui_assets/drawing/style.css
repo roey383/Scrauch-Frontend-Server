@@ -15,19 +15,29 @@ body {
   width: 750px;
 }
 
-#blue {
-  float: left;
-  /* margin-left:100px; */
+#true_sentence {
+  padding-bottom: 24px;
 }
+
 #sketchpad {
   /* float: left; */
-  margin-left:-120px;
+  margin-left:-70px;
+}
+
+#colors {
+  float: left;
+  margin-left:40px;
 }
 
 #submit_button{
   height: 50px;
   width: 80px;
   font-size: 25px;
+  padding-right: 74px;
+}
+
+/* #blue {
+  float: left;
 }
 #red {
   float: left;
@@ -36,6 +46,9 @@ body {
 #yellow {
   float: left;
 }
+#black {
+  float: left;
+} */
 input {
   height: 25px;
 }
@@ -71,30 +84,4 @@ button {
 #banner-message.alt button {
   background: #fff;
   color: #000;
-}
-
-#results {
-  display: none;
-  white-space: pre-wrap;
-}
-
-/* #new_group_succes {
-  display: none;
-} */
-
-#join_group_succes {
-  display: none;
-}
-/* 
-#group_options {
-  display: none;
-}
-
-#enter_code_group {
-  display: none;
-} */
-
-#results table {
-  margin-left:auto;
-  margin-right:auto;
 }

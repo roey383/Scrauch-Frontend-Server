@@ -7,6 +7,7 @@ $(document).ready(function () {
     var colorIdBlue = $("#blue");
     var colorIdYellow = $("#yellow");
     var colorIdRed = $("#red");
+    var colorIdBlack = $("#black");
     var userId;
     var name_player_var = $("#name_player");
 
@@ -15,9 +16,12 @@ $(document).ready(function () {
     colorIdBlue.on("click", colorBlue);
     colorIdYellow.on("click", colorYellow);
     colorIdRed.on("click", colorRed);
+    colorIdBlack.on("click", colorBlack);
 
     const canvas = document.querySelector('#sketchpad');
     const sketchpad = new Atrament(canvas);
+    sketchpad.weight = 0.6;
+    sketchpad.smoothing = 1;
 
     // handle create group click
     button_submit.on("click", function () {
@@ -83,6 +87,9 @@ $(document).ready(function () {
         sketchpad.color = "red";
     }
 
+    function colorBlack() {
+        sketchpad.color = "black";
+    }
 
 
     function setCookie(cname, cvalue, exdays) {

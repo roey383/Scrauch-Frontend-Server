@@ -13,8 +13,8 @@ public class TestJsoup {
 		ConfigServer.initConfig();
 		Element img = new Element("img");
 		img.attr("src","path/to/file.png");
-		img.attr("height", ConfigServer.getProperty(ConfigServer.PROFIL_HEIGHT));
-		img.attr("width", ConfigServer.getProperty(ConfigServer.PROFIL_WIDTH));
+		img.attr("height", ConfigServer.getProperty(ConfigServer.IMAGE_SIZE));
+		img.attr("width", ConfigServer.getProperty(ConfigServer.IMAGE_SIZE));
 		System.out.println(img);
 //		String nameElement = HtmlGenerator.generateNameElement(playerInfo.getName());
 		Element name = new Element("div");
