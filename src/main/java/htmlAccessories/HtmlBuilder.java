@@ -75,6 +75,7 @@ public class HtmlBuilder {
 
 		Map<String, ElementData> elementToValue = new HashMap<String, ElementData>();
 
+		Application.logger.info(htmlData.getUserId() + " is on stage " + htmlData.getStage());
 		switch (htmlData.getStage()) {
 		case UserStageMonitor.WAITING_ROOM_JOINERS:
 			elementToValue.put(ConfigServer.getProperty(ConfigServer.ELEMENT_WAITING_CAUSE),
@@ -89,7 +90,7 @@ public class HtmlBuilder {
 					ElementActionType.TEXT, ConfigServer.getProperty(ConfigServer.WAITING_TO_FINISH_REGISTERING)));
 			break;
 
-		case UserStageMonitor.PLAYERS_PRESENTATION: {
+		case UserStageMonitor.WAITING_PLAYERS_PRESENTATION: {
 			int col = -1;
 			for (PlayerPersonalInfo playerInfo : htmlData.getPlayersInfo()) {
 				col++;
@@ -158,6 +159,7 @@ public class HtmlBuilder {
 				elementToValue.put(ConfigServer.getProperty(ConfigServer.ELEMENT_GUESS_BOTTOM), new ElementData(
 						ElementActionType.TEXT, ConfigServer.getProperty(ConfigServer.BOTTOM_FOR_PAINTER)));
 				htmlData.setStage(UserStageMonitor.WAITING_ROOM_GUESSING);
+				userStage.setStageData(htmlData.getUserId(), htmlData);
 			}
 			break;
 		}

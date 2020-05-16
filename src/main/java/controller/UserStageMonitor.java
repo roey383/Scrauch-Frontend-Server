@@ -10,13 +10,14 @@ import java.util.concurrent.ConcurrentHashMap;
 import app.Application;
 import helper.Barrier;
 import htmlAccessories.HtmlData;
+import networking.DataHandlers;
 
 public class UserStageMonitor {
 
 	public static final String WAITING_ROOM_JOINERS = "waiting_room_joiners";
 	public static final String WAITING_ROOM_REGISTERING_INFO = "waiting_room_registering_info";
 	public static final String PERSONAL_INFO = "personal_info";
-	public static final String PLAYERS_PRESENTATION = "players_presentation";
+	public static final String WAITING_PLAYERS_PRESENTATION = "players_presentation";
 //	public static final String WAITING_ROOM_PLAYERS_PRESENTATION = "waiting_room_players_presentation";
 	public static final String DRAWING = "drawing_stage";
 	public static final String WAITING_ROOM_DRAWING = "waiting_room_drawing";
@@ -40,6 +41,7 @@ public class UserStageMonitor {
 	private Map<String, List<Long>> gameCodeToPlayersIds;
 	private Map<Long, HtmlData> playerIdToHtmlData;
 	private Map<String, Barrier> gameCodeToContinueNextStageFlag;
+	private Map<String, String> stageToEndPoint;
 
 	public UserStageMonitor() {
 		super();
@@ -47,6 +49,33 @@ public class UserStageMonitor {
 		this.playerIdToHtmlData = new ConcurrentHashMap<Long, HtmlData>();
 		this.gameCodeToPlayersIds = new ConcurrentHashMap<String, List<Long>>();
 		this.gameCodeToContinueNextStageFlag = new ConcurrentHashMap<String, Barrier>();
+		this.stageToEndPoint = buildStageToEndpoint();
+	}
+
+	private Map<String, String> buildStageToEndpoint() {
+		// TODO Auto-generated method stub
+		Map<String, String> stageToEndPoint = new ConcurrentHashMap<String, String>();
+		stageToEndPoint.put(WAITING_ROOM_JOINERS, DataHandlers.WAITING_ROOM_ENDPOINT);
+		stageToEndPoint.put(WAITING_ROOM_REGISTERING_INFO, DataHandlers.WAITING_ROOM_ENDPOINT);
+		stageToEndPoint.put(PERSONAL_INFO, DataHandlers.PERSONAL_INFO_ENDPOINT);
+		stageToEndPoint.put(WAITING_PLAYERS_PRESENTATION, DataHandlers.PLAYERS_PRESENTATION_ENDPOINT);
+		stageToEndPoint.put(DRAWING, DataHandlers.DRAWING_ENDPOINT);
+		stageToEndPoint.put(WAITING_ROOM_DRAWING, DataHandlers.WAITING_ROOM_ENDPOINT);
+		stageToEndPoint.put(FALSING, DataHandlers.FALSING_ENDPOINT);
+		stageToEndPoint.put(WAITING_ROOM_FALSING, DataHandlers.WAITING_ROOM_ENDPOINT);
+		stageToEndPoint.put(GUESSING, DataHandlers.GUESSING_ENDPOINT);
+		stageToEndPoint.put(WAITING_ROOM_GUESSING, DataHandlers.WAITING_ROOM_ENDPOINT);
+		stageToEndPoint.put(RESULTS, DataHandlers.RESULTS_ENDPOINT);
+		stageToEndPoint.put(WAITING_ROOM_DECIDING, DataHandlers.WAITING_ROOM_ENDPOINT);
+		stageToEndPoint.put(NOT_ENOUGH_PLAYERS, DataHandlers.NOT_ENOUGH_PLAYERS_ENDPOINT);
+		stageToEndPoint.put(LAST_ROUND_SCORES, DataHandlers.SCORES_ENDPOINT);
+		stageToEndPoint.put(TOTAL_SCORES, DataHandlers.SCORES_ENDPOINT);
+		stageToEndPoint.put(WINNER, DataHandlers.WINNER_ENDPOINT);
+		stageToEndPoint.put(ANOTHER_GAME, DataHandlers.ANOTHER_GAME_ENDPOINT);
+		stageToEndPoint.put(HOME_SCREEN, HOME_SCREEN);
+		stageToEndPoint.put(WAITING_ROOM_SEE_RESULTS, DataHandlers.WAITING_ROOM_ENDPOINT);
+
+		return stageToEndPoint;
 	}
 
 	private static HashSet<String> initWaitingStages() {
@@ -58,12 +87,12 @@ public class UserStageMonitor {
 		waitingStages.add(WAITING_ROOM_DRAWING);
 		waitingStages.add(WAITING_ROOM_FALSING);
 		waitingStages.add(WAITING_ROOM_GUESSING);
-		waitingStages.add(WAITING_ROOM_DECIDING);
 		waitingStages.add(WAITING_ROOM_SEE_RESULTS);
+		waitingStages.add(WAITING_ROOM_DECIDING);
 		return waitingStages;
 	}
 
-	public void resetBarriersToClosed(String gameCode) {
+	public void initBarriers(String gameCode) {
 		// TODO Auto-generated method stub
 		gameCodeToContinueNextStageFlag.put(gameCode, new Barrier());
 
@@ -95,22 +124,25 @@ public class UserStageMonitor {
 		String stage = playerIdToHtmlData.get(userId).getStage();
 		gameCodeToContinueNextStageFlag.get(gameCode).setStageGateOpen(stage);
 
-		for (Long playerId : gameCodeToPlayersIds.get(gameCode)) {
-			if (playerIdToHtmlData.containsKey(playerId) && playerIdToHtmlData.get(playerId).getStage().equals(stage)) {
-				playerIdToHtmlData.get(playerId).setContinueNextStage();
-			}
-		}
+//		for (Long playerId : gameCodeToPlayersIds.get(gameCode)) {
+//			if (playerIdToHtmlData.containsKey(playerId) && playerIdToHtmlData.get(playerId).getStage().equals(stage)) {
+//				try {
+//					playerIdToHtmlData.get(playerId).setContinueNextStage();
+//				} catch (Exception e) {
+//					// TODO: handle exception
+//					Application.logger.error("error set up from waiting: " + e);
+//				}
+//			}
+//		}
 
 	}
 
 	public boolean getUserContinueNextStage(long userId) {
 		// TODO Auto-generated method stub
-//		String gameCode = playerIdToGameCode.get(userId);
-//		if (gameCodeToContinueNextStageFlag.get(gameCode) == true) {
-//			return true;
-//		}
-
-		return playerIdToHtmlData.get(userId).getIsContinueNextStage();
+//		return playerIdToHtmlData.get(userId).getIsContinueNextStage();
+		boolean isOpen = gameCodeToContinueNextStageFlag.get(playerIdToGameCode.get(userId)).isGateOpen(playerIdToHtmlData.get(userId).getStage());
+		Application.logger.info("GATE: " + userId + ", stage: " + playerIdToHtmlData.get(userId).getStage() + ", gate: " + isOpen);
+		return isOpen;
 	}
 
 	public static Set<String> getWaitingRoomsStages() {
@@ -130,12 +162,40 @@ public class UserStageMonitor {
 
 	public void removePlayer(long userId) {
 		// TODO Auto-generated method stub
-		Application.logger.warn("remove plaer - NOT IMPLEMENTED YET");
+		Application.logger.warn("removing playuer " + userId);
+//		this.playerIdToHtmlData.remove(userId);
+		String gameCode = playerIdToGameCode.get(userId);
+		List<Long> playersIds = new ArrayList<Long>();
+		for (Long playerId : this.gameCodeToPlayersIds.get(gameCode)) {
+			if (playerId != userId) {
+				playersIds.add(playerId);
+			}
+		}
+		this.gameCodeToPlayersIds.put(gameCode, playersIds);
+		playerIdToGameCode.remove(userId);
+
 	}
 
 	public HtmlData getHtmlData(long userId) {
 		// TODO Auto-generated method stub
 		return playerIdToHtmlData.get(userId);
+	}
+
+	public boolean userExits(long userId) {
+		// TODO Auto-generated method stub
+		return playerIdToGameCode.containsKey(userId);
+	}
+
+	public String getEndPointForCurrentStage(long userId) {
+		// TODO Auto-generated method stub
+		if (!userExits(userId)) {
+			return HOME_SCREEN;
+		}
+		String stage = playerIdToHtmlData.get(userId).getStage();
+		if (stage.equals(FALSING) && playerIdToHtmlData.get(userId).getDrawingSentence().getPlayerId() == userId) {
+			return DataHandlers.WAITING_ROOM_ENDPOINT;
+		}
+		return stageToEndPoint.get(stage);
 	}
 
 }

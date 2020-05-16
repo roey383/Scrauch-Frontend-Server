@@ -137,7 +137,7 @@ public class HtmlData extends UserStage {
 		// TODO Auto-generated constructor stub
 		super(userId, stage);
 		switch (stage) {
-		case UserStageMonitor.PLAYERS_PRESENTATION:
+		case UserStageMonitor.WAITING_PLAYERS_PRESENTATION:
 			this.playersInfo = (List<PlayerPersonalInfo>) list;
 			this.isContinue = true;
 			break;

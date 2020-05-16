@@ -22,7 +22,7 @@ public class WebServer {
 
 	private static final String HOME_PAGE_ENDPOINT = "/";
 	private static final String UI_ASSETS_BASE_DIR = "ui_assets";
-	public static final String RESOURCES_BASE_DIR  = "src/main/resources";
+	public static final String RESOURCES_BASE_DIR = "src/main/resources";
 
 	private final int port;
 	private HttpServer server;
@@ -67,13 +67,30 @@ public class WebServer {
 
 		if (asset.length() < 4 || !asset.substring(asset.length() - 4).contains(".")) {
 			String path = UI_ASSETS_BASE_DIR + asset;
+			long userId;
 			if (asset.equals(HOME_PAGE_ENDPOINT)) {
-				String homePagePath = "/" + path + "index.html";;
 				Application.logger.info(exchange.getRemoteAddress() + " has connected to website");
-				response = readUiAsset(homePagePath);
+//				if (exchange.getRequestHeaders().get("Cookie") != null) {
+//					userId = Long.parseLong(exchange.getRequestHeaders().get("Cookie").get(0).split("=")[1]);
+//					Application.logger.info(
+//							"user " + userId + " in home page with cookie");
+//					String endPoint = userStage.getEndPointForCurrentStage(userId);
+//					path = "/" + path + endPoint;
+//					Application.logger.info("path: " + path);
+////					path = "/" + path;
+//					if (!endPoint.equals("/")) {
+//						path = path + "/";
+//					}
+//				}
+//				else {
+//					path = "/" + path;
+//				}
+				path = "/" + path;
+				path = path + "index.html";
+				response = readUiAsset(path);
 			} else {
-				long userId = Long.parseLong(exchange.getRequestHeaders().get("Cookie").get(0).split("=")[1]);
-				path = path + "/index.html";
+				userId = Long.parseLong(exchange.getRequestHeaders().get("Cookie").get(0).split("=")[1]);
+				path = path + /*asset + */"/index.html";
 				response = HtmlBuilder.loadHtml(path, userId);
 				Application.logger.info(exchange.getRemoteAddress() + " loaded assest " + path);
 //            	response = readUiAsset(path);
@@ -86,29 +103,28 @@ public class WebServer {
 		sendResponse(response, exchange);
 	}
 
-	private byte[] readUiAsset(String asset) throws IOException  {
+	private byte[] readUiAsset(String asset) throws IOException {
 		Application.logger.info("asset path: " + asset);
 		InputStream assetStream = null;
 		if (asset.contains(".png") || asset.contains("jpg")) {
 			try {
-				assetStream = new FileInputStream(/*RESOURCES_BASE_DIR + */asset);
+				assetStream = new FileInputStream(/* RESOURCES_BASE_DIR + */asset);
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 //				e.printStackTrace();
 				Application.logger.error("asset not found: " + e);
 				return new byte[] {};
 			}
-			
-		}
-		else {
+
+		} else {
 			assetStream = getClass().getResourceAsStream(asset);
 			if (assetStream == null) {
 				Application.logger.error("asset not found: from getResource");
 				return new byte[] {};
 			}
-			
+
 		}
-	
+
 		Application.logger.info("assest read: " + asset);
 		byte[] stream = assetStream.readAllBytes();
 		assetStream.close();
@@ -130,8 +146,8 @@ public class WebServer {
 		OutputStream outputStream = exchange.getResponseBody();
 		try {
 			outputStream.write(responseBytes);
-			
-		}catch (IOException e) {
+
+		} catch (IOException e) {
 			System.out.println("EXCEPTION: " + e);
 		}
 		outputStream.flush();

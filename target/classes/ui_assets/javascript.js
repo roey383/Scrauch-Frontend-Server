@@ -90,7 +90,12 @@ $(document).ready(function () {
     }
 
     function onHttpResponseNewGame(data, status) {
-        console.log("got response");
+        console.log("got response: " + data);
+        if (data === "no"){
+            console.log("ok no");
+            alert("אתה כבר משחק בקבוצה אחרת. ניתן מקסימום בו זמנית בקבוצה אחת");
+            return;
+        }
         if (status === "success") {
             console.log(data);
             window.location.replace("./waiting_room");
@@ -100,7 +105,17 @@ $(document).ready(function () {
     }
 
     function onHttpResponseJoinGroup(data, status) {
-        console.log("got response");
+        console.log("got response: " + data);
+        if (data === "no"){
+            console.log("ok no");
+            alert("אתה כבר משחק בקבוצה אחרת. ניתן מקסימום בו זמנית בקבוצה אחת");
+            return;
+        }
+        if (data === "full"){
+            console.log("game is full");
+            alert("המשחק מלא");
+            return;
+        }
         if (status === "success") {
             console.log(data);
             window.location.replace("./waiting_room");

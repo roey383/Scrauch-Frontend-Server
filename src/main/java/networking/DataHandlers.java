@@ -27,20 +27,20 @@ import model.frontend.FrontendResponse;
 
 public class DataHandlers {
 
-	private static final String DATA_ENDPOINT = "/data";
-	private static final String CREATE_GAME_ENDPOINT = "/create_game";
-	private static final String JOIN_GAME_ENDPOINT = "/join_game";
-	private static final String WAITING_ROOM_ENDPOINT = "/waiting_room";
-	private static final String PERSONAL_INFO_ENDPOINT = "/personal_info";
-	private static final String DRAWING_ENDPOINT = "/drawing";
-	private static final String FALSING_ENDPOINT = "/falsing";
-	private static final String GUESSING_ENDPOINT = "/guessing";
-	private static final String RESULTS_ENDPOINT = "/results";
-	private static final String SCORES_ENDPOINT = "/scores";
-	private static final String ANOTHER_GAME_ENDPOINT = "/another_game";
-	private static final String WINNER_ENDPOINT = "/winner";
-	private static final String PLAYERS_PRESENTATION_ENDPOINT = "/players_presentation";
-	private static final String NOT_ENOUGH_PLAYERS_ENDPOINT = "/not_enough_players";
+	public static final String DATA_ENDPOINT = "/data";
+	public static final String CREATE_GAME_ENDPOINT = "/create_game";
+	public static final String JOIN_GAME_ENDPOINT = "/join_game";
+	public static final String WAITING_ROOM_ENDPOINT = "/waiting_room";
+	public static final String PERSONAL_INFO_ENDPOINT = "/personal_info";
+	public static final String DRAWING_ENDPOINT = "/drawing";
+	public static final String FALSING_ENDPOINT = "/falsing";
+	public static final String GUESSING_ENDPOINT = "/guessing";
+	public static final String RESULTS_ENDPOINT = "/results";
+	public static final String SCORES_ENDPOINT = "/scores";
+	public static final String ANOTHER_GAME_ENDPOINT = "/another_game";
+	public static final String WINNER_ENDPOINT = "/winner";
+	public static final String PLAYERS_PRESENTATION_ENDPOINT = "/players_presentation";
+	public static final String NOT_ENOUGH_PLAYERS_ENDPOINT = "/not_enough_players";
 
 	private HttpServer server;
 	private ScrouchGameLogicApp scrouchLogic;
@@ -76,8 +76,12 @@ public class DataHandlers {
 		case CREATE_GAME_ENDPOINT: {
 			Application.logger.info("user " + data.getUserId() + " request to create game with num of players = "
 					+ data.getNumOfPlayers() + ", sessions = " + data.getNumOfSessions());
+//			if(userStage.userExits(data.getUserId())) {
+//				response = objectMapper.writeValueAsBytes("no");
+//				break;
+//			}
 			String gameCode = scrouchLogic.newGame(data.getNumOfPlayers(), data.getNumOfSessions());
-			userStage.resetBarriersToClosed(gameCode);
+			userStage.initBarriers(gameCode);
 			int playersLeft = scrouchLogic.joinPlayerToGame(data.getUserId(), gameCode);
 			HtmlData htmlData = new HtmlData(data.getUserId(), UserStageMonitor.WAITING_ROOM_JOINERS, gameCode);
 			Application.logger.info(htmlData + ". left " + playersLeft + " players");
@@ -92,14 +96,24 @@ public class DataHandlers {
 		}
 		case JOIN_GAME_ENDPOINT: {
 			Application.logger.info("user " + data.getUserId() + " request to join game " + data.getGameCode());
-//			Long id1 = Long.parseLong("880398900877000300");
-//			Long id2 = Long.parseLong("481654656413539800");
-//			String gameCode = userStage.getGameCode(data.getUserId() == id1 ? id2 : id1);
-			int playersLeft = scrouchLogic.joinPlayerToGame(data.getUserId(), data.getGameCode() /* gameCode */);
+			Long id1 = Long.parseLong("880398900877000300");
+			Long id2 = Long.parseLong("481654656413539800");
+			String gameCode = userStage.getGameCode(data.getUserId() == id1 ? id2 : id1);
+//			String gameCode = data.getGameCode();
+//			if(userStage.userExits(data.getUserId())) {
+//				response = objectMapper.writeValueAsBytes("no");
+//				break;
+//			}
+			int playersLeft = scrouchLogic.joinPlayerToGame(data.getUserId(), gameCode);
+			if (playersLeft == -1) {
+				response = objectMapper.writeValueAsBytes("full");
+				Application.logger.info("user " + data.getUserId() + " got full game. out");
+				break;
+			}
 			HtmlData htmlData = new HtmlData(data.getUserId(), UserStageMonitor.WAITING_ROOM_JOINERS,
-					data.getGameCode() /* gameCode */);
+					gameCode);
 			Application.logger.info(htmlData + ". left " + playersLeft + " players");
-			userStage.addUser(data.getUserId(), data.getGameCode() /* gameCode */);
+			userStage.addUser(data.getUserId(), gameCode);
 			userStage.setStageData(data.getUserId(), htmlData);
 			if (playersLeft == 0) {
 				userStage.setUpFromWaitingRoom(data.getUserId());
@@ -125,14 +139,14 @@ public class DataHandlers {
 				case UserStageMonitor.WAITING_ROOM_REGISTERING_INFO: {
 					List<PlayerPersonalInfo> playersInfo = scrouchLogic
 							.getAllPlayersInformation(userStage.getGameCode(data.getUserId()));
-					HtmlData htmlData = new HtmlData(data.getUserId(), UserStageMonitor.PLAYERS_PRESENTATION,
+					HtmlData htmlData = new HtmlData(data.getUserId(), UserStageMonitor.WAITING_PLAYERS_PRESENTATION,
 							playersInfo);
 					Application.logger.info(htmlData);
 					userStage.setStageData(data.getUserId(), htmlData);
 					urlRedirection = PLAYERS_PRESENTATION_ENDPOINT;
 					break;
 				}
-				case UserStageMonitor.PLAYERS_PRESENTATION: {
+				case UserStageMonitor.WAITING_PLAYERS_PRESENTATION: {
 					String trueSentence = scrouchLogic.getNextTrueSentence(userStage.getGameCode(data.getUserId()));
 					HtmlData htmlData = new HtmlData(data.getUserId(), UserStageMonitor.DRAWING, trueSentence);
 					Application.logger.info(htmlData);
@@ -272,6 +286,7 @@ public class DataHandlers {
 			Application.logger.info(htmlData + ". left " + playersLeft + " players");
 			userStage.setStageData(data.getUserId(), htmlData);
 			if (playersLeft == 0) {
+//				userStage.resetBarriersToClosed(userStage.getGameCode(data.getUserId()));
 				userStage.setUpFromWaitingRoom(data.getUserId());
 			}
 			response = objectMapper.writeValueAsBytes("");
@@ -286,7 +301,8 @@ public class DataHandlers {
 			Application.logger.info(htmlData + ". left " + playersLeft + " players");
 			userStage.setStageData(data.getUserId(), htmlData);
 			if (playersLeft == 0) {
-				userStage.resetBarriersToClosed(userStage.getGameCode(data.getUserId())); // first point to reset barriers
+//				userStage.resetBarriersToClosed(userStage.getGameCode(data.getUserId())); // first point to reset
+//				Application.logger.info("user " + data.getUserId() + " reset Gates ");					// barriers
 				userStage.setUpFromWaitingRoom(data.getUserId());
 			}
 			response = objectMapper.writeValueAsBytes("");
@@ -336,7 +352,7 @@ public class DataHandlers {
 				Application.logger.info(htmlData + ". left " + playersLeft + " players");
 				userStage.setStageData(data.getUserId(), htmlData);
 				if (playersLeft == 0) {
-					userStage.resetBarriersToClosed(userStage.getGameCode(data.getUserId()));
+//					userStage.resetBarriersToClosed(userStage.getGameCode(data.getUserId()));
 					userStage.setUpFromWaitingRoom(data.getUserId());
 				}
 				response = objectMapper.writeValueAsBytes(new FrontendResponse(true, WAITING_ROOM_ENDPOINT));
@@ -357,19 +373,18 @@ public class DataHandlers {
 			Application.logger.info("user " + data.getUserId() + " inserted another game page ");
 			boolean decision = data.getDecision();
 			int playersLeft = scrouchLogic.addPlayerContinueChoice(data.getUserId(), decision);
-			if (decision) {
-				HtmlData htmlData = new HtmlData(data.getUserId(), UserStageMonitor.WAITING_ROOM_DECIDING);
-				Application.logger.info(htmlData);
-				userStage.setStageData(data.getUserId(), htmlData);
-				response = objectMapper.writeValueAsBytes(new FrontendResponse(true, WAITING_ROOM_ENDPOINT));
-
-			} else {
-				response = objectMapper.writeValueAsBytes(new FrontendResponse(true, UserStageMonitor.HOME_SCREEN));
-			}
+			HtmlData htmlData = new HtmlData(data.getUserId(), UserStageMonitor.WAITING_ROOM_DECIDING);
+			Application.logger.info(htmlData);
+			userStage.setStageData(data.getUserId(), htmlData);
+			response = objectMapper.writeValueAsBytes(new FrontendResponse(true, WAITING_ROOM_ENDPOINT));
 			if (playersLeft == 0) {
 				userStage.setUpFromWaitingRoom(data.getUserId());
 			}
 			if (!decision) {
+				htmlData = new HtmlData(data.getUserId(), UserStageMonitor.HOME_SCREEN);
+				Application.logger.info(htmlData);
+				userStage.setStageData(data.getUserId(), htmlData);
+				response = objectMapper.writeValueAsBytes(new FrontendResponse(true, UserStageMonitor.HOME_SCREEN));
 				userStage.removePlayer(data.getUserId());
 			}
 
