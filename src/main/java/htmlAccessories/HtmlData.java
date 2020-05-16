@@ -3,8 +3,6 @@ package htmlAccessories;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import controller.UserStageMonitor;
 import logic.DrawingTrueSentencePair;
@@ -28,12 +26,6 @@ public class HtmlData extends UserStage {
 	private List<Result> results = null;
 	private Map<PlayerPersonalInfo, Integer> scoreBoard = null;
 	private PlayerPersonalInfo winner = null;
-
-//	private Map<String, String> elementToValue = null;
-
-	private ReentrantReadWriteLock reentrantReadWriteLock = new ReentrantReadWriteLock();
-	private Lock readLock = reentrantReadWriteLock.readLock();
-	private Lock writeLock = reentrantReadWriteLock.writeLock();
 
 	public Integer getNumOfPlayers() {
 		return numOfPlayers;
@@ -139,7 +131,6 @@ public class HtmlData extends UserStage {
 		switch (stage) {
 		case UserStageMonitor.WAITING_PLAYERS_PRESENTATION:
 			this.playersInfo = (List<PlayerPersonalInfo>) list;
-			this.isContinue = true;
 			break;
 		case UserStageMonitor.RESULTS:
 			this.results = (List<Result>) list;
@@ -172,26 +163,6 @@ public class HtmlData extends UserStage {
 		// TODO Auto-generated constructor stub
 		super(userId, stage);
 		this.winner = winner;
-	}
-
-	public void setContinueNextStage() {
-		// TODO Auto-generated method stub
-		writeLock.lock();
-		try {
-			isContinue = true;
-		} finally {
-			writeLock.unlock();
-		}
-	}
-
-	public boolean getIsContinueNextStage() {
-		// TODO Auto-generated method stub
-		readLock.lock();
-		try {
-			return isContinue;
-		} finally {
-			readLock.unlock();
-		}
 	}
 
 	public String getStage() {

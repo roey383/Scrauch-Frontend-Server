@@ -18,7 +18,6 @@ public class UserStageMonitor {
 	public static final String WAITING_ROOM_REGISTERING_INFO = "waiting_room_registering_info";
 	public static final String PERSONAL_INFO = "personal_info";
 	public static final String WAITING_PLAYERS_PRESENTATION = "players_presentation";
-//	public static final String WAITING_ROOM_PLAYERS_PRESENTATION = "waiting_room_players_presentation";
 	public static final String DRAWING = "drawing_stage";
 	public static final String WAITING_ROOM_DRAWING = "waiting_room_drawing";
 	public static final String FALSING = "falsing_stage";
@@ -83,7 +82,6 @@ public class UserStageMonitor {
 		HashSet<String> waitingStages = new HashSet<String>();
 		waitingStages.add(WAITING_ROOM_JOINERS);
 		waitingStages.add(WAITING_ROOM_REGISTERING_INFO);
-//		waitingStages.add(WAITING_ROOM_PLAYERS_PRESENTATION);
 		waitingStages.add(WAITING_ROOM_DRAWING);
 		waitingStages.add(WAITING_ROOM_FALSING);
 		waitingStages.add(WAITING_ROOM_GUESSING);
@@ -111,11 +109,6 @@ public class UserStageMonitor {
 		// TODO Auto-generated method stub
 		playerIdToHtmlData.put(userId, htmlData);
 
-		String gameCode = playerIdToGameCode.get(userId);
-		if (waitingStages.contains(htmlData.getStage())
-				&& gameCodeToContinueNextStageFlag.get(gameCode).isGateOpen(htmlData.getStage())) {
-			htmlData.setContinueNextStage();
-		}
 	}
 
 	public synchronized void setUpFromWaitingRoom(long userId) {
@@ -123,17 +116,6 @@ public class UserStageMonitor {
 		String gameCode = playerIdToGameCode.get(userId);
 		String stage = playerIdToHtmlData.get(userId).getStage();
 		gameCodeToContinueNextStageFlag.get(gameCode).setStageGateOpen(stage);
-
-//		for (Long playerId : gameCodeToPlayersIds.get(gameCode)) {
-//			if (playerIdToHtmlData.containsKey(playerId) && playerIdToHtmlData.get(playerId).getStage().equals(stage)) {
-//				try {
-//					playerIdToHtmlData.get(playerId).setContinueNextStage();
-//				} catch (Exception e) {
-//					// TODO: handle exception
-//					Application.logger.error("error set up from waiting: " + e);
-//				}
-//			}
-//		}
 
 	}
 
