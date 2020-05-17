@@ -87,19 +87,19 @@ public class DataHandlers {
 			Application.logger.info(htmlData + ". left " + playersLeft + " players");
 			userStage.addUser(data.getUserId(), gameCode);
 			userStage.setStageData(data.getUserId(), htmlData);
-			if (playersLeft == 0) {
-				userStage.setUpFromWaitingRoom(data.getUserId());
-			}
+//			if (playersLeft == 0) {
+//				userStage.setUpFromWaitingRoom(data.getUserId());
+//			}
 			response = objectMapper.writeValueAsBytes("");
 
 			break;
 		}
 		case JOIN_GAME_ENDPOINT: {
 			Application.logger.info("user " + data.getUserId() + " request to join game " + data.getGameCode());
-			Long id1 = Long.parseLong("880398900877000300");
-			Long id2 = Long.parseLong("481654656413539800");
-			String gameCode = userStage.getGameCode(data.getUserId() == id1 ? id2 : id1);
-//			String gameCode = data.getGameCode();
+//			Long id1 = Long.parseLong("880398900877000300");
+//			Long id2 = Long.parseLong("481654656413539800");
+//			String gameCode = userStage.getGameCode(data.getUserId() == id1 ? id2 : id1);
+			String gameCode = data.getGameCode();
 //			if(userStage.userExits(data.getUserId())) {
 //				response = objectMapper.writeValueAsBytes("no");
 //				break;

@@ -104,7 +104,7 @@ public class WebServer {
 	}
 
 	private byte[] readUiAsset(String asset) throws IOException {
-		Application.logger.info("asset path: " + asset);
+//		Application.logger.info("asset path: " + asset);
 		InputStream assetStream = null;
 		if (asset.contains(".png") || asset.contains("jpg")) {
 			try {
