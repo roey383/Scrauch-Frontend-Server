@@ -6,7 +6,7 @@ $(document).ready(function () {
 
     document.onload = checkCookie();
 
-    var interval = 100;
+    var interval = 5000;
 
 
     // sendRequestCheckHold();

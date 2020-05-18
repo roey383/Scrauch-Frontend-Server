@@ -27,7 +27,7 @@ public class Application {
 
 		webServer.startServer();
 		
-		Application.logger.info("Server is listening on port " + port);
+		Application.logger.warn("Server is listening on port " + port);
 	}
 
 }

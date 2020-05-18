@@ -125,7 +125,7 @@ public class WebServer {
 
 		}
 
-		Application.logger.info("assest read: " + asset);
+		Application.logger.warn("assest read: " + asset);
 		byte[] stream = assetStream.readAllBytes();
 		assetStream.close();
 		return stream;
