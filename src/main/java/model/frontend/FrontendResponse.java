@@ -5,12 +5,32 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class FrontendResponse {
 
 	private boolean isContinue;
-	private boolean okNewGame;
+	private boolean alreadyParticipating;
+	private boolean redirectingLast;
 	private String urlRedirection;
 
 	public FrontendResponse(boolean isContinue, String urlRedirection) {
 		super();
 		this.isContinue = isContinue;
+		this.urlRedirection = urlRedirection;
+		this.alreadyParticipating = false;
+		this.redirectingLast = false;
+	}
+
+	public FrontendResponse(boolean isContinue, boolean alreadyParticipating, String urlRedirection) {
+		super();
+		this.isContinue = isContinue;
+		this.alreadyParticipating = alreadyParticipating;
+		this.urlRedirection = urlRedirection;
+		this.redirectingLast = false;
+	}
+
+	public FrontendResponse(boolean isContinue, boolean alreadyParticipating, boolean redirectingLast,
+			String urlRedirection) {
+		super();
+		this.isContinue = isContinue;
+		this.alreadyParticipating = alreadyParticipating;
+		this.redirectingLast = redirectingLast;
 		this.urlRedirection = urlRedirection;
 	}
 
@@ -19,14 +39,19 @@ public class FrontendResponse {
 		return isContinue;
 	}
 	
-	@JsonProperty(value="ok_new_game")
-	public boolean okNewGame() {
-		return okNewGame;
+	@JsonProperty(value="already_participating")
+	public boolean getAlreadyParticipating() {
+		return alreadyParticipating;
 	}
 
 	public String getUrlRedirection() {
 		return urlRedirection;
 	}
-	
+
+	@JsonProperty(value="redirecting_last")
+	public boolean getRedirectingLast() {
+		return redirectingLast;
+	}
+
 	
 }

@@ -70,23 +70,7 @@ public class WebServer {
 			long userId;
 			if (asset.equals(HOME_PAGE_ENDPOINT)) {
 				Application.logger.info(exchange.getRemoteAddress() + " has connected to website");
-//				if (exchange.getRequestHeaders().get("Cookie") != null) {
-//					userId = Long.parseLong(exchange.getRequestHeaders().get("Cookie").get(0).split("=")[1]);
-//					Application.logger.info(
-//							"user " + userId + " in home page with cookie");
-//					String endPoint = userStage.getEndPointForCurrentStage(userId);
-//					path = "/" + path + endPoint;
-//					Application.logger.info("path: " + path);
-////					path = "/" + path;
-//					if (!endPoint.equals("/")) {
-//						path = path + "/";
-//					}
-//				}
-//				else {
-//					path = "/" + path;
-//				}
-				path = "/" + path;
-				path = path + "index.html";
+				path = "/" + path + "index.html";
 				response = readUiAsset(path);
 			} else {
 				userId = Long.parseLong(exchange.getRequestHeaders().get("Cookie").get(0).split("=")[1]);

@@ -88,6 +88,9 @@ public class HtmlBuilder {
 		case UserStageMonitor.WAITING_ROOM_REGISTERING_INFO:
 			elementToValue.put(ConfigServer.getProperty(ConfigServer.ELEMENT_WAITING_CAUSE), new ElementData(
 					ElementActionType.TEXT, ConfigServer.getProperty(ConfigServer.WAITING_TO_FINISH_REGISTERING)));
+			elementToValue.put(ConfigServer.getProperty(ConfigServer.ELEMENT_CODE_GROUP_IS),
+					new ElementData(ElementActionType.TEXT, userStage.getGameCode(htmlData.getUserId()) + " "
+							+ ConfigServer.getProperty(ConfigServer.CODE_GROUP_IS)));
 			break;
 
 		case UserStageMonitor.WAITING_PLAYERS_PRESENTATION: {
@@ -110,6 +113,9 @@ public class HtmlBuilder {
 		case UserStageMonitor.WAITING_ROOM_DRAWING:
 			elementToValue.put(ConfigServer.getProperty(ConfigServer.ELEMENT_WAITING_CAUSE), new ElementData(
 					ElementActionType.TEXT, ConfigServer.getProperty(ConfigServer.WAITING_TO_FINISH_DRAWING)));
+			elementToValue.put(ConfigServer.getProperty(ConfigServer.ELEMENT_CODE_GROUP_IS),
+					new ElementData(ElementActionType.TEXT, userStage.getGameCode(htmlData.getUserId()) + " "
+							+ ConfigServer.getProperty(ConfigServer.CODE_GROUP_IS)));
 			break;
 
 		case UserStageMonitor.FALSING: {
@@ -133,6 +139,9 @@ public class HtmlBuilder {
 		case UserStageMonitor.WAITING_ROOM_FALSING:
 			elementToValue.put(ConfigServer.getProperty(ConfigServer.ELEMENT_WAITING_CAUSE), new ElementData(
 					ElementActionType.TEXT, ConfigServer.getProperty(ConfigServer.WAITING_TO_FINISH_FALSING)));
+			elementToValue.put(ConfigServer.getProperty(ConfigServer.ELEMENT_CODE_GROUP_IS),
+					new ElementData(ElementActionType.TEXT, userStage.getGameCode(htmlData.getUserId()) + " "
+							+ ConfigServer.getProperty(ConfigServer.CODE_GROUP_IS)));
 			break;
 
 		case UserStageMonitor.GUESSING: {
@@ -167,6 +176,9 @@ public class HtmlBuilder {
 		case UserStageMonitor.WAITING_ROOM_GUESSING:
 			elementToValue.put(ConfigServer.getProperty(ConfigServer.ELEMENT_WAITING_CAUSE), new ElementData(
 					ElementActionType.TEXT, ConfigServer.getProperty(ConfigServer.WAITING_TO_FINISH_GUESSING)));
+			elementToValue.put(ConfigServer.getProperty(ConfigServer.ELEMENT_CODE_GROUP_IS),
+					new ElementData(ElementActionType.TEXT, userStage.getGameCode(htmlData.getUserId()) + " "
+							+ ConfigServer.getProperty(ConfigServer.CODE_GROUP_IS)));
 			break;
 
 		case UserStageMonitor.RESULTS: {
@@ -200,6 +212,9 @@ public class HtmlBuilder {
 		case UserStageMonitor.WAITING_ROOM_SEE_RESULTS:
 			elementToValue.put(ConfigServer.getProperty(ConfigServer.ELEMENT_WAITING_CAUSE), new ElementData(
 					ElementActionType.TEXT, ConfigServer.getProperty(ConfigServer.WAITING_FOR_SEE_SCORES)));
+			elementToValue.put(ConfigServer.getProperty(ConfigServer.ELEMENT_CODE_GROUP_IS),
+					new ElementData(ElementActionType.TEXT, userStage.getGameCode(htmlData.getUserId()) + " "
+							+ ConfigServer.getProperty(ConfigServer.CODE_GROUP_IS)));
 			break;
 
 		case UserStageMonitor.WINNER:
@@ -210,6 +225,9 @@ public class HtmlBuilder {
 		case UserStageMonitor.WAITING_ROOM_DECIDING:
 			elementToValue.put(ConfigServer.getProperty(ConfigServer.ELEMENT_WAITING_CAUSE), new ElementData(
 					ElementActionType.TEXT, ConfigServer.getProperty(ConfigServer.WAITING_FOR_DECIDERS)));
+			elementToValue.put(ConfigServer.getProperty(ConfigServer.ELEMENT_CODE_GROUP_IS),
+					new ElementData(ElementActionType.TEXT, userStage.getGameCode(htmlData.getUserId()) + " "
+							+ ConfigServer.getProperty(ConfigServer.CODE_GROUP_IS)));
 			break;
 		default:
 			break;
@@ -293,9 +311,7 @@ public class HtmlBuilder {
 	}
 
 	private static Element generateImageElement(String imagePath, String size) {
-		Element img = new Element("img").attr("src", imagePath)
-				.attr("height", size)
-				.attr("width", size);
+		Element img = new Element("img").attr("src", imagePath).attr("height", size).attr("width", size);
 		return img;
 	}
 

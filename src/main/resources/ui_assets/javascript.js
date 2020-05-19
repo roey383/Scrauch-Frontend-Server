@@ -59,7 +59,7 @@ $(document).ready(function () {
         var numOfSessions = parseInt(numOfSessionsBox.val());
 
         if (isNaN(numOfSessions)) {
-            numOfSessions = 2;
+            numOfSessions = 1;
         }
 
         // Search request to the server
@@ -91,14 +91,14 @@ $(document).ready(function () {
 
     function onHttpResponseNewGame(data, status) {
         console.log("got response: " + data);
-        if (data === "no"){
-            console.log("ok no");
-            alert("אתה כבר משחק בקבוצה אחרת. ניתן מקסימום בו זמנית בקבוצה אחת");
-            return;
-        }
         if (status === "success") {
+            if (data.already_participating === true){
+                console.log("already participating");
+                alert("מבטל את המשחק שהינך משתתף בו, ויוצר קבוצה חדשה");
+                // return;
+            }
             console.log(data);
-            window.location.replace("./waiting_room");
+            window.location.replace("." + data.url_redirection);
         } else {
             alert("Error connecting to the server " + status);
         }
@@ -106,19 +106,25 @@ $(document).ready(function () {
 
     function onHttpResponseJoinGroup(data, status) {
         console.log("got response: " + data);
-        if (data === "no"){
-            console.log("ok no");
-            alert("אתה כבר משחק בקבוצה אחרת. ניתן מקסימום בו זמנית בקבוצה אחת");
-            return;
-        }
         if (data === "full"){
             console.log("game is full");
             alert("המשחק מלא");
             return;
         }
         if (status === "success") {
+            if (data.redirecting_last === true){
+                console.log("redirecting last endpoint");
+                alert("חוזר להמשך המשחק");
+                // return;
+            }
+            else if (data.already_participating === true){
+                console.log("ok no");
+                alert("מבטל את המשחק שהינך משתתף בו, ומצטרף לקבוצה חדשה");
+                // return;
+            }
+            
             console.log(data);
-            window.location.replace("./waiting_room");
+            window.location.replace("." + data.url_redirection);
         } else {
             alert("Error connecting to the server " + status);
         }

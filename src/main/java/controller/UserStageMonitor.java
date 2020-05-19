@@ -144,7 +144,7 @@ public class UserStageMonitor {
 
 	public void removePlayer(long userId) {
 		// TODO Auto-generated method stub
-		Application.logger.warn("removing playuer " + userId);
+		Application.logger.warn("removing player " + userId);
 //		this.playerIdToHtmlData.remove(userId);
 		String gameCode = playerIdToGameCode.get(userId);
 		List<Long> playersIds = new ArrayList<Long>();

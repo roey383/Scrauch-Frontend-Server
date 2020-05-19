@@ -76,10 +76,11 @@ public class DataHandlers {
 		case CREATE_GAME_ENDPOINT: {
 			Application.logger.info("user " + data.getUserId() + " request to create game with num of players = "
 					+ data.getNumOfPlayers() + ", sessions = " + data.getNumOfSessions());
-//			if(userStage.userExits(data.getUserId())) {
-//				response = objectMapper.writeValueAsBytes("no");
-//				break;
-//			}
+			boolean alreadyParticipating = false;
+			if(userStage.userExits(data.getUserId())) {
+				userStage.removePlayer(data.getUserId());
+				alreadyParticipating = true;
+			}
 			String gameCode = scrouchLogic.newGame(data.getNumOfPlayers(), data.getNumOfSessions());
 			userStage.initBarriers(gameCode);
 			int playersLeft = scrouchLogic.joinPlayerToGame(data.getUserId(), gameCode);
@@ -87,10 +88,8 @@ public class DataHandlers {
 			Application.logger.info(htmlData + ". left " + playersLeft + " players");
 			userStage.addUser(data.getUserId(), gameCode);
 			userStage.setStageData(data.getUserId(), htmlData);
-//			if (playersLeft == 0) {
-//				userStage.setUpFromWaitingRoom(data.getUserId());
-//			}
-			response = objectMapper.writeValueAsBytes("");
+//			response = objectMapper.writeValueAsBytes("");
+			response = objectMapper.writeValueAsBytes(new FrontendResponse(true, alreadyParticipating, WAITING_ROOM_ENDPOINT));
 
 			break;
 		}
@@ -100,10 +99,17 @@ public class DataHandlers {
 //			Long id2 = Long.parseLong("481654656413539800");
 //			String gameCode = userStage.getGameCode(data.getUserId() == id1 ? id2 : id1);
 			String gameCode = data.getGameCode();
-//			if(userStage.userExits(data.getUserId())) {
-//				response = objectMapper.writeValueAsBytes("no");
-//				break;
-//			}
+			boolean alreadyParticipating = false;
+			String endPoint = WAITING_ROOM_ENDPOINT;
+			if(userStage.userExits(data.getUserId())) {
+				alreadyParticipating = true;
+				if (gameCode.equals(userStage.getGameCode(data.getUserId()))) {
+					endPoint = userStage.getEndPointForCurrentStage(data.getUserId());
+					response = objectMapper.writeValueAsBytes(new FrontendResponse(true, alreadyParticipating, true, endPoint));
+					break;
+				}
+				userStage.removePlayer(data.getUserId());
+			}
 			int playersLeft = scrouchLogic.joinPlayerToGame(data.getUserId(), gameCode);
 			if (playersLeft == -1) {
 				response = objectMapper.writeValueAsBytes("full");
@@ -118,7 +124,8 @@ public class DataHandlers {
 			if (playersLeft == 0) {
 				userStage.setUpFromWaitingRoom(data.getUserId());
 			}
-			response = objectMapper.writeValueAsBytes("");
+//			response = objectMapper.writeValueAsBytes("");
+			response = objectMapper.writeValueAsBytes(new FrontendResponse(true, alreadyParticipating, endPoint));
 
 			break;
 		}
