@@ -123,7 +123,7 @@ public class UserStageMonitor {
 		// TODO Auto-generated method stub
 //		return playerIdToHtmlData.get(userId).getIsContinueNextStage();
 		boolean isOpen = gameCodeToContinueNextStageFlag.get(playerIdToGameCode.get(userId)).isGateOpen(playerIdToHtmlData.get(userId).getStage());
-		Application.logger.info("GATE: " + userId + ", stage: " + playerIdToHtmlData.get(userId).getStage() + ", gate: " + isOpen);
+		Application.logger.debug("GATE: " + userId + ", stage: " + playerIdToHtmlData.get(userId).getStage() + ", gate: " + isOpen);
 		return isOpen;
 	}
 

@@ -38,11 +38,11 @@ public class Barrier {
 
 		stageToIsGateOpen.put(stage, gate);
 
+		if (stage.equals(UserStageMonitor.WAITING_ROOM_DRAWING) && extraGame) {
+			anotherGameOdd = !anotherGameOdd;
+		}
+		
 		switch (stage) {
-		case UserStageMonitor.WAITING_ROOM_DRAWING:
-			if (extraGame) {
-				anotherGameOdd = !anotherGameOdd;
-			}
 		case UserStageMonitor.WAITING_ROOM_SEE_RESULTS: {
 			stageToIsGateOpen.put(stage, new Gate(true));
 			oddRound = !oddRound;

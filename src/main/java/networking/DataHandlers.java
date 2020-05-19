@@ -123,7 +123,7 @@ public class DataHandlers {
 			break;
 		}
 		case WAITING_ROOM_ENDPOINT: {
-			Application.logger.info("request to check if continue");
+			Application.logger.debug("request to check if continue");
 			boolean isContinue = userStage.getUserContinueNextStage(data.getUserId());
 			String urlRedirection = null;
 			if (isContinue) {
