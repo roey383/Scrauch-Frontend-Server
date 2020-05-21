@@ -111,9 +111,14 @@ public class DataHandlers {
 				userStage.removePlayer(data.getUserId());
 			}
 			int playersLeft = scrouchLogic.joinPlayerToGame(data.getUserId(), gameCode);
-			if (playersLeft == -1) {
+			if (playersLeft == -1) { // game is full
 				response = objectMapper.writeValueAsBytes("full");
 				Application.logger.info("user " + data.getUserId() + " got full game. out");
+				break;
+			}
+			else if (playersLeft == -2) { // no such game
+				response = objectMapper.writeValueAsBytes("no such game");
+				Application.logger.info("user " + data.getUserId() + " no such game");
 				break;
 			}
 			HtmlData htmlData = new HtmlData(data.getUserId(), UserStageMonitor.WAITING_ROOM_JOINERS,

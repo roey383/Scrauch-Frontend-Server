@@ -6,21 +6,41 @@
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
     <link rel="stylesheet" type="text/css" href="/ui_assets/falsing/style.css">
     <script type="text/javascript" src="/ui_assets/falsing/javascript.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 </head>
 <meta charset="utf-8">
 
 <body>
-    <div id="layout">
-        <h1>Scrauch</h1>
+    <nav class="navbar navbar-expand-sm bg-primary navbar-dark justify-content-end navbar-static-top">
+        <a class="navbar-brand" href="./">Home</a>
+        <h3 class="ml-auto mr-1"></h3>
+        <a class="navbar-brand">Scrauch</a>
+    </nav>
+    <div class="jumbotron w-auto p-3" id="layout">
         <div>
             <div id="join_group_head">
-                <h1>הכנס משפט שיבלבל את השאר</h1>
+                <div class="pb-2 mt-4 mb-2 border-bottom">
+                    <h2 style="font-family: Arial, Helvetica, sans-serif;">הכנס משפט שיבלבל את השאר</h2>
+                </div>
                 <div id="drawing">
                 </div>
             </div>
             <div id="enter_sentence">
-                <button id="submit_button">אישור</button>
-                <input type="text" id="false_sentence" size="30">
+                <div style="padding-bottom: 10px;">
+                    <input class="form-control" id="false_sentence" type="text" style="text-align: right;">
+                </div>
+                <button id="submit_button" type="button" class="btn btn-primary">אישור</button>
             </div>
 
         </div>

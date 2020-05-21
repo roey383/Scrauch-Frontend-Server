@@ -1,6 +1,6 @@
 body {
   background: #e6f3ff;
-  padding: 20px;
+  /* padding: 20px; */
   font-family: Helvetica;
 }
 
@@ -15,19 +15,18 @@ body {
   width: 750px;
 }
 
-#true_sentence {
+/* #true_sentence {
   padding-bottom: 24px;
-}
+} */
 
-#sketchpad {
-  /* float: left; */
+/* #sketchpad {
   margin-left:-70px;
 }
 
 #colors {
   float: left;
   margin-left:40px;
-}
+} */
 
 #submit_button{
   height: 50px;

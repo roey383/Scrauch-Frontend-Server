@@ -7,31 +7,59 @@
     <link rel="stylesheet" type="text/css" href="/ui_assets/personal_info/style.css">
     <script type="text/javascript" src="/ui_assets/dist/atrament.min.js"></script>
     <script type="text/javascript" src="/ui_assets/personal_info/javascript.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 </head>
 <meta charset="utf-8">
 
 <body>
-    <div id="layout">
+    <nav class="navbar navbar-expand-sm bg-primary navbar-dark justify-content-end navbar-static-top">
+        <a class="navbar-brand" href="./">Home</a>
+        <h3 class="ml-auto mr-1"></h3>
+        <a class="navbar-brand">Scrauch</a>
+    </nav>
+    <div class="jumbotron w-auto p-3" id="layout">
         <!-- <h1>Scrauch</h1> -->
-        <h1>צייר את עצמך</h1>
-        <canvas id="sketchpad" width="420" height="420" style="top:10%;left:10%;border:2px solid;"></canvas>
-        <div id="colors">
-            <div>
-                <div style="top:50%;left:45%;width:40px;height:40px;background:black;" id="black"></div><br>
-            </div>
-            <div>
-                <div style="top:50%;left:46%;width:40px;height:40px;background:blue;" id="blue"></div><br>
-            </div>
-            <div>
-                <div style="top:50%;left:47%;width:40px;height:40px;background:red;" id="red"></div><br>
-            </div>
-            <div>
-                <div style="top:50%;left:45%;width:40px;height:40px;background:yellow;" id="yellow"></div><br>
-            </div>
+        <div class="pb-2 mt-4 mb-2 border-bottom">
+            <h1 style="font-family: Arial, Helvetica, sans-serif;">צייר את עצמך</h1>
         </div>
-        <h1 id="name_head">הכנס שם</h1>
+        <div class="btn-group btn-group-toggle w-auto p-3 d-block" data-toggle="buttons">
+            <label class="btn btn-secondary active" style="width:30px;height:30px;background:black;">
+                <input type="radio" name="options" id="black" checked>
+            </label>
+            <label class="btn btn-secondary" style="width:30px;height:30px;background:blue;">
+                <input type="radio" name="options" id="blue" style="background:blue;" autocomplete="off">
+            </label>
+            <label class="btn btn-secondary" style="width:30px;height:30px;background:red;">
+                <input type="radio" name="options" id="red" autocomplete="off">
+            </label>
+            <label class="btn btn-secondary" style="width:30px;height:30px;background:yellow;">
+                <input type="radio" name="options" id="yellow" autocomplete="off">
+            </label>
+        </div>
+        <canvas class="w-auto p-3" id="sketchpad" height="300" style="border:0.5px solid;"></canvas>
+        <!--width="420" height="420" top:10%;left:10%-->
+        <!-- <div id="colors" class="w-auto p-3">
+                <span style="width:40px;height:40px;background:black;" id="black"></span>
+                <span style="top:50%;left:46%;width:40px;height:40px;background:blue;" id="blue"></span>
+                <span style="top:50%;left:47%;width:40px;height:40px;background:red;" id="red"></span>
+                <span style="top:50%;left:45%;width:40px;height:40px;background:yellow;" id="yellow"></span>
+        </div> -->
+        <div class="pb-2 mt-4 mb-2 ">
+            <h2 style="font-family: Arial, Helvetica, sans-serif;">הכנס שם</h2>
+        </div>
         <div id="enter_name_div">
-            <button id="submit_button">אישור</button>
+            <button id="submit_button" type="button" class="btn btn-primary">אישור</button>
             <input type="text" id="name_player">
         </div>
     </div>

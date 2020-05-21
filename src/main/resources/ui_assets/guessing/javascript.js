@@ -55,7 +55,8 @@ $(document).ready(function () {
     if (painter) {
         var interval = 3000;
         for (i = 0; i < MAX; i++) {
-            sentences[i].style.cursor="default";
+            // sentences[i].style.cursor="default";
+            sentences[i].disabled = true;
         }
         sendRequestCheck();
     }
@@ -69,6 +70,13 @@ $(document).ready(function () {
             break;
         }
     }
+
+    for (i = max; i < MAX; i++) {
+        // console.log(results[i].val());
+        console.log(i);
+        sentences[i].style.display = "none";
+    }
+    
 
     var buttons = new Array(max);
     for (i = 0; i < max; i++) {

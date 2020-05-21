@@ -229,6 +229,10 @@ public class HtmlBuilder {
 					new ElementData(ElementActionType.TEXT, userStage.getGameCode(htmlData.getUserId()) + " "
 							+ ConfigServer.getProperty(ConfigServer.CODE_GROUP_IS)));
 			break;
+			
+		case UserStageMonitor.NOT_ENOUGH_PLAYERS:
+				userStage.removePlayer(htmlData.getUserId());
+				break;
 		default:
 			break;
 		}

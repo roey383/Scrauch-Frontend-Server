@@ -16,7 +16,7 @@ $(document).ready(function () {
     button_create_group.on("click", function () {
         banner.addClass("alt");
         console.log("clicked");
-
+        
         // send request to the server
         $.ajax({
             method: "POST",
@@ -51,7 +51,9 @@ $(document).ready(function () {
 
     function createRequestCreateGame() {
         var url = window.location.href;
-        var numOfPlayers = parseFloat(numOfPlayersBox.val(), 10);
+        // var numOfPlayers = parseFloat(numOfPlayersBox.val(), 10);
+        var numOfPlayers = parseInt(numOfPlayersBox.val());
+        console.log(numOfPlayers);
         if (isNaN(numOfPlayers)) {
             numOfPlayers = 2;
         }
@@ -109,6 +111,11 @@ $(document).ready(function () {
         if (data === "full"){
             console.log("game is full");
             alert("המשחק מלא");
+            return;
+        }
+        if (data === "no such game"){
+            console.log("no such game");
+            alert("קוד קבוצה שגוי");
             return;
         }
         if (status === "success") {

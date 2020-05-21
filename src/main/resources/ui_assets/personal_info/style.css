@@ -1,6 +1,6 @@
 body {
   background: #e6f3ff;
-  padding: 20px;
+  /* padding: 20px; */
   font-family: Helvetica;
 }
 
@@ -14,23 +14,23 @@ body {
   margin: 0 auto;
   width: 750px;
 }
-
+/* 
 #sketchpad {
-  /* float: left; */
-  margin-left:-70px;
-}
+  
+  padding:  0px 0px 0px 0px;
+} */
 
-#colors {
+/* #colors {
   float: left;
   margin-left:40px;
-}
-
+} */
+/* 
 #sketchpad {
-  /* float: left; */
+  float: left;
   margin-left:-80px;
 
-  /* padding: 0px 0px 0px 0px; */
-}
+  padding: 0px 0px 0px 0px;
+} */
 
 /* 
 #blue {
@@ -43,7 +43,7 @@ body {
 #yellow {
   float: left;
 } */
-input {
+/* input {
   height:30px;
   padding: 0px;
   margin: 0px;
@@ -51,9 +51,9 @@ input {
   font-size: 25px;
   text-align: right;
   padding-right: 5px;
-}
+} */
 
-#enter_name_div{
+/* #enter_name_div{
   margin: -30px;
 }
 
@@ -65,5 +65,5 @@ button {
   font-size: 15px;
   color: #fff;
   height: 30px;
-}
+} */
 

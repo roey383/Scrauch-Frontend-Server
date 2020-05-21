@@ -1,6 +1,6 @@
 body {
   background: #e6f3ff;
-  padding: 20px;
+  /* padding: 20px; */
   font-family: Helvetica;
 }
 
@@ -17,10 +17,10 @@ body {
 
 
 #false_sentence {
-  height: 25px;
+  /* height: 25px;
   width: 250px;
   font-size: 20px;
-  text-align: right;
+  text-align: right; */
   padding-right: 5px;
 }
 
