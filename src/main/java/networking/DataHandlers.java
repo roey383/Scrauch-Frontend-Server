@@ -108,7 +108,9 @@ public class DataHandlers {
 					response = objectMapper.writeValueAsBytes(new FrontendResponse(true, alreadyParticipating, true, endPoint));
 					break;
 				}
-				userStage.removePlayer(data.getUserId());
+				if (userStage.gameExits(gameCode)) {
+					userStage.removePlayer(data.getUserId());
+				}
 			}
 			int playersLeft = scrouchLogic.joinPlayerToGame(data.getUserId(), gameCode);
 			if (playersLeft == -1) { // game is full

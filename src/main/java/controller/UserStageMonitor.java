@@ -180,4 +180,9 @@ public class UserStageMonitor {
 		return stageToEndPoint.get(stage);
 	}
 
+	public boolean gameExits(String gameCode) {
+		// TODO Auto-generated method stub
+		return gameCodeToPlayersIds.containsKey(gameCode);
+	}
+
 }
