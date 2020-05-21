@@ -19,6 +19,7 @@ $(document).ready(function () {
     colorIdBlack.on("click", colorBlack);
 
     const canvas = document.querySelector('#sketchpad');
+    canvas.style.cursor = 'crosshair';
     const sketchpad = new Atrament(canvas);
     sketchpad.weight = 0.6;
     sketchpad.smoothing = 1;

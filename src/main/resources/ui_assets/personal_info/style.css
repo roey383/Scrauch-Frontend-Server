@@ -14,6 +14,29 @@ body {
   margin: 0 auto;
   width: 750px;
 }
+
+#name_player {
+  /* height: 25px; */
+  width: 150px;
+  padding-right: 6px;
+  /* align-self: center; */
+  
+  /* font-size: 20px; */
+  /* padding: 3px; */
+}
+
+/* canvas{
+  height: 100vh;
+  z-index: -2;
+} */
+/* canvas {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+} */
 /* 
 #sketchpad {
   

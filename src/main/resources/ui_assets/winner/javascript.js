@@ -4,19 +4,12 @@ $(document).ready(function () {
     // find elements on the page
     var userId;
 
-    document.onload = checkCookie();
-
-    // var interval = 3000;
-
-
-    // setTimeout(redirect, interval);
-
-    // function redirect(){
-    //     window.location.replace("http://localhost:9000/another_game");
-    // }
+    var im = document.getElementById("image");
+    // im.onerror = function(){alert("no image");};
     
+    document.onload = checkCookie();
         
-    var interval = 3000;
+    var interval = 7000;
     setTimeout(sendRequestCheck, interval);
 
     function sendRequestCheck(){

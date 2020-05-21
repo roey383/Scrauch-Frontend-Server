@@ -25,7 +25,8 @@ body {
 
 #code_group {
   /* height: 25px; */
-  width: 75px;
+  width: 100px;
+  padding-left: 3px;
   align-self: center;
   
   /* font-size: 20px; */

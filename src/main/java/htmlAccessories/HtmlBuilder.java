@@ -218,8 +218,15 @@ public class HtmlBuilder {
 			break;
 
 		case UserStageMonitor.WINNER:
+			PlayerPersonalInfo winner = htmlData.getWinner();
 			elementToValue.put(ConfigServer.getProperty(ConfigServer.ELEMENT_WINNER),
-					new ElementData(ElementActionType.TEXT, htmlData.getWinner().getName()));
+					new ElementData(ElementActionType.TEXT, winner.getName()));
+			String imagePath = saveImageToResources(winner.getProfil(), winner.getId(), "profil");
+			Element playerInfoElement = generatePlayerInfoElement(winner.getName(), imagePath);
+			elementToValue.put(ConfigServer.getProperty(ConfigServer.ELEMENT_WINNER),
+					new ElementData(ElementActionType.ELEMENT, playerInfoElement.toString()));
+			Application.logger.info(winner.toString() + playerInfoElement.toString());
+
 			break;
 
 		case UserStageMonitor.WAITING_ROOM_DECIDING:
@@ -229,10 +236,10 @@ public class HtmlBuilder {
 					new ElementData(ElementActionType.TEXT, userStage.getGameCode(htmlData.getUserId()) + " "
 							+ ConfigServer.getProperty(ConfigServer.CODE_GROUP_IS)));
 			break;
-			
+
 		case UserStageMonitor.NOT_ENOUGH_PLAYERS:
-				userStage.removePlayer(htmlData.getUserId());
-				break;
+			userStage.removePlayer(htmlData.getUserId());
+			break;
 		default:
 			break;
 		}
@@ -315,7 +322,8 @@ public class HtmlBuilder {
 	}
 
 	private static Element generateImageElement(String imagePath, String size) {
-		Element img = new Element("img").attr("src", imagePath).attr("height", size).attr("width", size);
+		Element img = new Element("img").attr("src", imagePath).attr("height", size).attr("width", size).attr("onerror",
+				"location.reload()");
 		return img;
 	}
 
