@@ -26,9 +26,13 @@ public class Barrier {
 	}
 
 	public synchronized boolean isGateOpen(String stage) {
-		return stage.equals(UserStageMonitor.WAITING_ROOM_DECIDING)
+//		Application.logger.info("inside barrier: stage = " + stage);
+//		Application.logger.info("inside barrier: stage to gate = " + stageToIsGateOpen);
+		boolean open = stage.equals(UserStageMonitor.WAITING_ROOM_DECIDING)
 				? stageToIsGateOpen.get(stage).isGateOpen(anotherGameOdd)
 				: stageToIsGateOpen.get(stage).isGateOpen(oddRound);
+//		Application.logger.info("after inside barrier: gate = " + stageToIsGateOpen.get(stage) + ", is open = " + open);
+		return open;
 	}
 
 	public synchronized void setStageGateOpen(String stage) {
@@ -41,7 +45,7 @@ public class Barrier {
 		if (stage.equals(UserStageMonitor.WAITING_ROOM_DRAWING) && extraGame) {
 			anotherGameOdd = !anotherGameOdd;
 		}
-		
+
 		switch (stage) {
 		case UserStageMonitor.WAITING_ROOM_SEE_RESULTS: {
 			stageToIsGateOpen.put(stage, new Gate(true));
@@ -87,6 +91,11 @@ public class Barrier {
 		public synchronized boolean isGateOpen(boolean oddRound) {
 
 			return oddRound ? gateOdd : gatePair;
+		}
+
+		@Override
+		public String toString() {
+			return "Gate [gateOdd=" + gateOdd + ", gatePair=" + gatePair + "]";
 		}
 
 	}

@@ -1,14 +1,11 @@
 package controller;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import app.Application;
-import helper.Barrier;
 import htmlAccessories.HtmlData;
 import networking.DataHandlers;
 
@@ -36,18 +33,14 @@ public class UserStageMonitor {
 
 	public static Set<String> waitingStages = initWaitingStages();
 
-	private Map<Long, String> playerIdToGameCode;
-	private Map<String, List<Long>> gameCodeToPlayersIds;
-	private Map<Long, HtmlData> playerIdToHtmlData;
-	private Map<String, Barrier> gameCodeToContinueNextStageFlag;
+	private Map<Long, User> userIdToUser;
+	private Map<String, Game> codeToGame;
 	private Map<String, String> stageToEndPoint;
 
 	public UserStageMonitor() {
 		super();
-		this.playerIdToGameCode = new ConcurrentHashMap<Long, String>();
-		this.playerIdToHtmlData = new ConcurrentHashMap<Long, HtmlData>();
-		this.gameCodeToPlayersIds = new ConcurrentHashMap<String, List<Long>>();
-		this.gameCodeToContinueNextStageFlag = new ConcurrentHashMap<String, Barrier>();
+		this.userIdToUser = new ConcurrentHashMap<Long, User>();
+		this.codeToGame = new ConcurrentHashMap<String, Game>();
 		this.stageToEndPoint = buildStageToEndpoint();
 	}
 
@@ -90,41 +83,38 @@ public class UserStageMonitor {
 		return waitingStages;
 	}
 
-	public void initBarriers(String gameCode) {
-		// TODO Auto-generated method stub
-		gameCodeToContinueNextStageFlag.put(gameCode, new Barrier());
-
-	}
-
 	public synchronized void addUser(long userId, String gameCode) {
 		// TODO Auto-generated method stub
-		playerIdToGameCode.put(userId, gameCode);
-		if (!gameCodeToPlayersIds.containsKey(gameCode)) {
-			gameCodeToPlayersIds.put(gameCode, new ArrayList<Long>());
+		Game game;
+		if (!codeToGame.containsKey(gameCode)) {
+			game = new Game(gameCode);
+			codeToGame.put(gameCode, game);
 		}
-		gameCodeToPlayersIds.get(gameCode).add(userId);
+		game = codeToGame.get(gameCode);
+		User user = new User(userId, game);
+		userIdToUser.put(userId, user);
+		game.addUser(user);
 	}
 
 	public void setStageData(long userId, HtmlData htmlData) {
 		// TODO Auto-generated method stub
-		playerIdToHtmlData.put(userId, htmlData);
+		userIdToUser.get(userId).setHtmlData(htmlData);
 
 	}
 
 	public synchronized void setUpFromWaitingRoom(long userId) {
 		// TODO Auto-generated method stub
-		String gameCode = playerIdToGameCode.get(userId);
-		String stage = playerIdToHtmlData.get(userId).getStage();
-		gameCodeToContinueNextStageFlag.get(gameCode).setStageGateOpen(stage);
+		userIdToUser.get(userId).setStageOpen();
 
 	}
 
 	public boolean getUserContinueNextStage(long userId) {
 		// TODO Auto-generated method stub
 //		return playerIdToHtmlData.get(userId).getIsContinueNextStage();
-		boolean isOpen = gameCodeToContinueNextStageFlag.get(playerIdToGameCode.get(userId)).isGateOpen(playerIdToHtmlData.get(userId).getStage());
-		Application.logger.debug("GATE: " + userId + ", stage: " + playerIdToHtmlData.get(userId).getStage() + ", gate: " + isOpen);
-		return isOpen;
+		Application.logger.debug("GATE: " + userId + ", stage: " + userIdToUser.get(userId).getStage() + ", gate: "
+				+ userIdToUser.get(userId).isCurrentStageGateOpen());
+
+		return userIdToUser.get(userId).isCurrentStageGateOpen();
 	}
 
 	public static Set<String> getWaitingRoomsStages() {
@@ -134,38 +124,31 @@ public class UserStageMonitor {
 
 	public String getStage(long userId) {
 		// TODO Auto-generated method stub
-		return playerIdToHtmlData.get(userId).getStage();
+		return userIdToUser.get(userId).getStage();
 	}
 
 	public String getGameCode(long userId) {
 		// TODO Auto-generated method stub
-		return playerIdToGameCode.get(userId);
+		return userIdToUser.get(userId).getGameCode();
 	}
 
 	public void removePlayer(long userId) {
 		// TODO Auto-generated method stub
 		Application.logger.warn("removing player " + userId);
-//		this.playerIdToHtmlData.remove(userId);
-		String gameCode = playerIdToGameCode.get(userId);
-		List<Long> playersIds = new ArrayList<Long>();
-		for (Long playerId : this.gameCodeToPlayersIds.get(gameCode)) {
-			if (playerId != userId) {
-				playersIds.add(playerId);
-			}
-		}
-		this.gameCodeToPlayersIds.put(gameCode, playersIds);
-		playerIdToGameCode.remove(userId);
+
+		userIdToUser.get(userId).removeSelf();
+		userIdToUser.remove(userId);
 
 	}
 
 	public HtmlData getHtmlData(long userId) {
 		// TODO Auto-generated method stub
-		return playerIdToHtmlData.get(userId);
+		return userIdToUser.get(userId).getHtmlData();
 	}
 
 	public boolean userExits(long userId) {
 		// TODO Auto-generated method stub
-		return playerIdToGameCode.containsKey(userId);
+		return userIdToUser.containsKey(userId);
 	}
 
 	public String getEndPointForCurrentStage(long userId) {
@@ -173,8 +156,9 @@ public class UserStageMonitor {
 		if (!userExits(userId)) {
 			return HOME_SCREEN;
 		}
-		String stage = playerIdToHtmlData.get(userId).getStage();
-		if (stage.equals(FALSING) && playerIdToHtmlData.get(userId).getDrawingSentence().getPlayerId() == userId) {
+		User user = userIdToUser.get(userId);
+		String stage = user.getStage();
+		if (stage.equals(FALSING) && user.getHtmlData().getDrawingSentence().getPlayerId() == userId) {
 			return DataHandlers.WAITING_ROOM_ENDPOINT;
 		}
 		return stageToEndPoint.get(stage);
@@ -182,7 +166,7 @@ public class UserStageMonitor {
 
 	public boolean gameExits(String gameCode) {
 		// TODO Auto-generated method stub
-		return gameCodeToPlayersIds.containsKey(gameCode);
+		return codeToGame.containsKey(gameCode);
 	}
 
 }

@@ -9,7 +9,7 @@ $(document).ready(function () {
     
     document.onload = checkCookie();
         
-    var interval = 7000;
+    var interval = 3000;
     setTimeout(sendRequestCheck, interval);
 
     function sendRequestCheck(){

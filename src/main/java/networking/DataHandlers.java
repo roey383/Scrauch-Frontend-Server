@@ -82,7 +82,6 @@ public class DataHandlers {
 				alreadyParticipating = true;
 			}
 			String gameCode = scrouchLogic.newGame(data.getNumOfPlayers(), data.getNumOfSessions());
-			userStage.initBarriers(gameCode);
 			int playersLeft = scrouchLogic.joinPlayerToGame(data.getUserId(), gameCode);
 			HtmlData htmlData = new HtmlData(data.getUserId(), UserStageMonitor.WAITING_ROOM_JOINERS, gameCode);
 			Application.logger.info(htmlData + ". left " + playersLeft + " players");
