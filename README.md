@@ -1,2 +1,2 @@
-# Scrauch-Frontend-Linux
+# Scrauch-Frontend-Server
 Social Network Game
