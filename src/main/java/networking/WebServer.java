@@ -13,7 +13,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 
 import app.Application;
-import app.ScrouchGameLogicApp;
+import app.ScrauchGameLogicApp;
 import config.ConfigServer;
 import controller.UserStageMonitor;
 import htmlAccessories.HtmlBuilder;
@@ -26,13 +26,13 @@ public class WebServer {
 
 	private final int port;
 	private HttpServer server;
-	private ScrouchGameLogicApp scrouchLogic;
+	private ScrauchGameLogicApp scrauchLogic;
 	private UserStageMonitor userStage;
 
-	public WebServer(int port, ScrouchGameLogicApp scrouchLogic, UserStageMonitor userStage) {
+	public WebServer(int port, ScrauchGameLogicApp scrauchLogic, UserStageMonitor userStage) {
 		ConfigServer.initConfig();
 		this.port = port;
-		this.scrouchLogic = scrouchLogic;
+		this.scrauchLogic = scrauchLogic;
 		this.userStage = userStage;
 		HtmlBuilder.init(userStage);
 	}
@@ -45,7 +45,7 @@ public class WebServer {
 			return;
 		}
 
-		new DataHandlers(this.server, this.scrouchLogic, this.userStage);
+		new DataHandlers(this.server, this.scrauchLogic, this.userStage);
 
 		// handle requests for resources
 		HttpContext assetsContext = server.createContext(HOME_PAGE_ENDPOINT);

@@ -20,10 +20,10 @@ public class Application {
 			port = Integer.parseInt(args[0]);
 		}
 		
-		ScrouchGameLogicApp scrouchLogic = new ScrouchGameLogicApp();
+		ScrauchGameLogicApp scrauchLogic = new ScrauchGameLogicApp();
 		UserStageMonitor userStage = new UserStageMonitor();
 
-		WebServer webServer = new WebServer(port, scrouchLogic, userStage);
+		WebServer webServer = new WebServer(port, scrauchLogic, userStage);
 
 		webServer.startServer();
 		

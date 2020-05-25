@@ -16,7 +16,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 
 import app.Application;
-import app.ScrouchGameLogicApp;
+import app.ScrauchGameLogicApp;
 import controller.UserStageMonitor;
 import htmlAccessories.HtmlData;
 import logic.DrawingTrueSentencePair;
@@ -43,11 +43,11 @@ public class DataHandlers {
 	public static final String NOT_ENOUGH_PLAYERS_ENDPOINT = "/not_enough_players";
 
 	private HttpServer server;
-	private ScrouchGameLogicApp scrouchLogic;
+	private ScrauchGameLogicApp scrouchLogic;
 	private UserStageMonitor userStage;
 	private ObjectMapper objectMapper;
 
-	public DataHandlers(HttpServer server, ScrouchGameLogicApp scrouchLogic, UserStageMonitor userStage) {
+	public DataHandlers(HttpServer server, ScrauchGameLogicApp scrouchLogic, UserStageMonitor userStage) {
 		// TODO Auto-generated constructor stub
 		this.server = server;
 		this.scrouchLogic = scrouchLogic;
@@ -72,6 +72,9 @@ public class DataHandlers {
 
 		String asset = exchange.getRequestURI().getPath();
 
+//		HtmlData htmlData = createHtmlData(response, asset.replaceAll(DATA_ENDPOINT, ""));
+		
+		
 		switch (asset.replaceAll(DATA_ENDPOINT, "")) {
 		case CREATE_GAME_ENDPOINT: {
 			Application.logger.info("user " + data.getUserId() + " request to create game with num of players = "

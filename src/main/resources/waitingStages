@@ -4,3 +4,22 @@ drawing
 falsing
 guessing
 deciding
+	public static final String WAITING_ROOM_JOINERS = "waiting_room_joiners";
+	public static final String WAITING_ROOM_REGISTERING_INFO = "waiting_room_registering_info";
+	public static final String PERSONAL_INFO = "personal_info";
+	public static final String WAITING_PLAYERS_PRESENTATION = "players_presentation";
+	public static final String DRAWING = "drawing_stage";
+	public static final String WAITING_ROOM_DRAWING = "waiting_room_drawing";
+	public static final String FALSING = "falsing_stage";
+	public static final String WAITING_ROOM_FALSING = "waiting_room_falsing";
+	public static final String GUESSING = "guessing";
+	public static final String WAITING_ROOM_GUESSING = "waiting_room_guessing";
+	public static final String RESULTS = "results_stage";
+	public static final String WAITING_ROOM_DECIDING = "waiting_room_deciding";
+	public static final String NOT_ENOUGH_PLAYERS = "not_enough_players_stage";
+	public static final String LAST_ROUND_SCORES = "last_round_scores_stage";
+	public static final String TOTAL_SCORES = "total_scores_stage";
+	public static final String WINNER = "winner_stage";
+	public static final String ANOTHER_GAME = "another_game_stage";
+	public static final String HOME_SCREEN = "/";
+	waiting_room_see_results
