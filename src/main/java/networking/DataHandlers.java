@@ -47,10 +47,10 @@ public class DataHandlers {
 	private UserStageMonitor userStage;
 	private ObjectMapper objectMapper;
 
-	public DataHandlers(HttpServer server, ScrauchGameLogicApp scrouchLogic, UserStageMonitor userStage) {
+	public DataHandlers(HttpServer server, ScrauchGameLogicApp scrauchLogic, UserStageMonitor userStage) {
 		// TODO Auto-generated constructor stub
 		this.server = server;
-		this.scrauchLogic = scrouchLogic;
+		this.scrauchLogic = scrauchLogic;
 		this.userStage = userStage;
 		this.objectMapper = new ObjectMapper();
 		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
