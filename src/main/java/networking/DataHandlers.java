@@ -43,14 +43,14 @@ public class DataHandlers {
 	public static final String NOT_ENOUGH_PLAYERS_ENDPOINT = "/not_enough_players";
 
 	private HttpServer server;
-	private ScrauchGameLogicApp scrouchLogic;
+	private ScrauchGameLogicApp scrauchLogic;
 	private UserStageMonitor userStage;
 	private ObjectMapper objectMapper;
 
 	public DataHandlers(HttpServer server, ScrauchGameLogicApp scrouchLogic, UserStageMonitor userStage) {
 		// TODO Auto-generated constructor stub
 		this.server = server;
-		this.scrouchLogic = scrouchLogic;
+		this.scrauchLogic = scrouchLogic;
 		this.userStage = userStage;
 		this.objectMapper = new ObjectMapper();
 		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -84,8 +84,8 @@ public class DataHandlers {
 				userStage.removePlayer(data.getUserId());
 				alreadyParticipating = true;
 			}
-			String gameCode = scrouchLogic.newGame(data.getNumOfPlayers(), data.getNumOfSessions());
-			int playersLeft = scrouchLogic.joinPlayerToGame(data.getUserId(), gameCode);
+			String gameCode = scrauchLogic.newGame(data.getNumOfPlayers(), data.getNumOfSessions());
+			int playersLeft = scrauchLogic.joinPlayerToGame(data.getUserId(), gameCode);
 			HtmlData htmlData = new HtmlData(data.getUserId(), UserStageMonitor.WAITING_ROOM_JOINERS, gameCode);
 			Application.logger.info(htmlData + ". left " + playersLeft + " players");
 			userStage.addUser(data.getUserId(), gameCode);
@@ -114,7 +114,7 @@ public class DataHandlers {
 					userStage.removePlayer(data.getUserId());
 				}
 			}
-			int playersLeft = scrouchLogic.joinPlayerToGame(data.getUserId(), gameCode);
+			int playersLeft = scrauchLogic.joinPlayerToGame(data.getUserId(), gameCode);
 			if (playersLeft == -1) { // game is full
 				response = objectMapper.writeValueAsBytes("full");
 				Application.logger.info("user " + data.getUserId() + " got full game. out");
@@ -153,7 +153,7 @@ public class DataHandlers {
 					break;
 				}
 				case UserStageMonitor.WAITING_ROOM_REGISTERING_INFO: {
-					List<PlayerPersonalInfo> playersInfo = scrouchLogic
+					List<PlayerPersonalInfo> playersInfo = scrauchLogic
 							.getAllPlayersInformation(userStage.getGameCode(data.getUserId()));
 					HtmlData htmlData = new HtmlData(data.getUserId(), UserStageMonitor.WAITING_PLAYERS_PRESENTATION,
 							playersInfo);
@@ -163,7 +163,7 @@ public class DataHandlers {
 					break;
 				}
 				case UserStageMonitor.WAITING_PLAYERS_PRESENTATION: {
-					String trueSentence = scrouchLogic.getNextTrueSentence(userStage.getGameCode(data.getUserId()));
+					String trueSentence = scrauchLogic.getNextTrueSentence(userStage.getGameCode(data.getUserId()));
 					HtmlData htmlData = new HtmlData(data.getUserId(), UserStageMonitor.DRAWING, trueSentence);
 					Application.logger.info(htmlData);
 					userStage.setStageData(data.getUserId(), htmlData);
@@ -171,7 +171,7 @@ public class DataHandlers {
 					break;
 				}
 				case UserStageMonitor.WAITING_ROOM_DRAWING: {
-					DrawingTrueSentencePair drawingSentence = scrouchLogic
+					DrawingTrueSentencePair drawingSentence = scrauchLogic
 							.getCurrentDrawingSentencePlayer(userStage.getGameCode(data.getUserId()));
 					HtmlData htmlData = new HtmlData(data.getUserId(), UserStageMonitor.FALSING, drawingSentence);
 					Application.logger.info(htmlData);
@@ -183,10 +183,10 @@ public class DataHandlers {
 					break;
 				}
 				case UserStageMonitor.WAITING_ROOM_FALSING: {
-					List<String> allSentences = scrouchLogic
+					List<String> allSentences = scrauchLogic
 							.getAllSentencesToCurrentDrawingExceptFalser(data.getUserId());
 					Application.logger.info("all sentences: " + allSentences);
-					DrawingTrueSentencePair drawingSentence = scrouchLogic
+					DrawingTrueSentencePair drawingSentence = scrauchLogic
 							.getCurrentDrawingSentencePlayer(userStage.getGameCode(data.getUserId()));
 					HtmlData htmlData = new HtmlData(data.getUserId(), UserStageMonitor.GUESSING, allSentences,
 							drawingSentence);
@@ -197,7 +197,7 @@ public class DataHandlers {
 				}
 				case UserStageMonitor.WAITING_ROOM_GUESSING: {
 					Application.logger.info(data.getUserId() + " on waiting for guessing handler");
-					List<Result> resultsCurrentRound = scrouchLogic
+					List<Result> resultsCurrentRound = scrauchLogic
 							.getCurrentDrawingResults(userStage.getGameCode(data.getUserId()));
 					HtmlData htmlData = new HtmlData(data.getUserId(), UserStageMonitor.RESULTS, resultsCurrentRound);
 					Application.logger.info(htmlData);
@@ -206,14 +206,14 @@ public class DataHandlers {
 					break;
 				}
 				case UserStageMonitor.WAITING_ROOM_SEE_RESULTS: {
-					int roundsLeft = scrouchLogic.roundsLeft(userStage.getGameCode(data.getUserId()));
-					int sessionsLeft = scrouchLogic.sessionsLeft(userStage.getGameCode(data.getUserId()));
+					int roundsLeft = scrauchLogic.roundsLeft(userStage.getGameCode(data.getUserId()));
+					int sessionsLeft = scrauchLogic.sessionsLeft(userStage.getGameCode(data.getUserId()));
 					Application.logger
 							.info("user " + data.getUserId() + " inserted waiting for all to see scores handler ");
 					Application.logger.info("rounds left: " + roundsLeft + ", sessions left " + sessionsLeft);
 					if (roundsLeft > 0) {
 						Application.logger.info("user " + data.getUserId() + " in more rounds left ");
-						DrawingTrueSentencePair drawingSentence = scrouchLogic
+						DrawingTrueSentencePair drawingSentence = scrauchLogic
 								.getCurrentDrawingSentencePlayer(userStage.getGameCode(data.getUserId()));
 						HtmlData htmlData = new HtmlData(data.getUserId(), UserStageMonitor.FALSING, drawingSentence);
 						Application.logger.info(htmlData);
@@ -226,7 +226,7 @@ public class DataHandlers {
 						break;
 					} else if (sessionsLeft > 0) {
 						Application.logger.info("user " + data.getUserId() + " in more sessions left ");
-						String trueSentence = scrouchLogic.getNextTrueSentence(userStage.getGameCode(data.getUserId()));
+						String trueSentence = scrauchLogic.getNextTrueSentence(userStage.getGameCode(data.getUserId()));
 						HtmlData htmlData = new HtmlData(data.getUserId(), UserStageMonitor.DRAWING, trueSentence);
 						Application.logger.info(htmlData);
 						userStage.setStageData(data.getUserId(), htmlData);
@@ -235,7 +235,7 @@ public class DataHandlers {
 						break;
 					}
 					Application.logger.info("user " + data.getUserId() + " in no sessions left - to winner ");
-					PlayerPersonalInfo winner = scrouchLogic.getWinner(userStage.getGameCode(data.getUserId()));
+					PlayerPersonalInfo winner = scrauchLogic.getWinner(userStage.getGameCode(data.getUserId()));
 					Application.logger.info("winner = " + winner.getId());
 					HtmlData htmlData = new HtmlData(data.getUserId(), UserStageMonitor.WINNER, winner);
 					Application.logger.info(htmlData);
@@ -246,9 +246,9 @@ public class DataHandlers {
 				}
 				case UserStageMonitor.WAITING_ROOM_DECIDING: {
 					Application.logger.info(data.getUserId() + " on waiting for deciding handler");
-					boolean isAnotherGame = scrouchLogic.isAnotherGame(userStage.getGameCode(data.getUserId()));
+					boolean isAnotherGame = scrauchLogic.isAnotherGame(userStage.getGameCode(data.getUserId()));
 					if (isAnotherGame) {
-						String trueSentence = scrouchLogic.getNextTrueSentence(userStage.getGameCode(data.getUserId()));
+						String trueSentence = scrauchLogic.getNextTrueSentence(userStage.getGameCode(data.getUserId()));
 						HtmlData htmlData = new HtmlData(data.getUserId(), UserStageMonitor.DRAWING, trueSentence);
 						Application.logger.info(htmlData);
 						userStage.setStageData(data.getUserId(), htmlData);
@@ -278,7 +278,7 @@ public class DataHandlers {
 //					+ ConfigServer.getProperty(ConfigServer.IMAGE_FILE_TYPE);
 //			ImageIO.write(bImage, ConfigServer.getProperty(ConfigServer.IMAGE_FILE_TYPE),
 //					new File(ConfigServer.getProperty(ConfigServer.ASSETS_BASE_DIR) + profilPath));
-			int playersLeft = scrouchLogic.registerPlayerInformation(data.getUserId(), data.getName(), bImage);
+			int playersLeft = scrauchLogic.registerPlayerInformation(data.getUserId(), data.getName(), bImage);
 			HtmlData htmlData = new HtmlData(data.getUserId(), UserStageMonitor.WAITING_ROOM_REGISTERING_INFO);
 			Application.logger.info(htmlData + ". left " + playersLeft + " players");
 			userStage.setStageData(data.getUserId(), htmlData);
@@ -297,7 +297,7 @@ public class DataHandlers {
 //					+ ConfigServer.getProperty(ConfigServer.IMAGE_FILE_TYPE);
 //			ImageIO.write(bImage, ConfigServer.getProperty(ConfigServer.IMAGE_FILE_TYPE),
 //					new File(ConfigServer.getProperty(ConfigServer.ASSETS_BASE_DIR) + drawingPath));
-			int playersLeft = scrouchLogic.addPlayerDrawing(data.getUserId(), bImage, data.getTrueSentence());
+			int playersLeft = scrauchLogic.addPlayerDrawing(data.getUserId(), bImage, data.getTrueSentence());
 			HtmlData htmlData = new HtmlData(data.getUserId(), UserStageMonitor.WAITING_ROOM_DRAWING);
 			Application.logger.info(htmlData + ". left " + playersLeft + " players");
 			userStage.setStageData(data.getUserId(), htmlData);
@@ -311,7 +311,7 @@ public class DataHandlers {
 		}
 		case FALSING_ENDPOINT: {
 			Application.logger.info("user " + data.getUserId() + " inesrted falsing handler ");
-			int playersLeft = scrouchLogic.addPlayerFalseDiscriptionToCurrentDrawing(data.getUserId(),
+			int playersLeft = scrauchLogic.addPlayerFalseDiscriptionToCurrentDrawing(data.getUserId(),
 					data.getFalseSentence());
 			HtmlData htmlData = new HtmlData(data.getUserId(), UserStageMonitor.WAITING_ROOM_FALSING);
 			Application.logger.info(htmlData + ". left " + playersLeft + " players");
@@ -327,7 +327,7 @@ public class DataHandlers {
 		}
 		case GUESSING_ENDPOINT: {
 			Application.logger.info("user " + data.getUserId() + " inserted guessing handler ");
-			int playersLeft = scrouchLogic.addPlayerGuessToCurrentDrawing(data.getUserId(), data.getGuessSentence());
+			int playersLeft = scrauchLogic.addPlayerGuessToCurrentDrawing(data.getUserId(), data.getGuessSentence());
 			HtmlData htmlData = new HtmlData(data.getUserId(), UserStageMonitor.WAITING_ROOM_GUESSING);
 			Application.logger.info(htmlData + ". left " + playersLeft + " players");
 			userStage.setStageData(data.getUserId(), htmlData);
@@ -340,7 +340,7 @@ public class DataHandlers {
 		}
 		case RESULTS_ENDPOINT: {
 			Application.logger.info("user " + data.getUserId() + " inserted results page ");
-			Map<PlayerPersonalInfo, Integer> scoreBoardLastRound = scrouchLogic
+			Map<PlayerPersonalInfo, Integer> scoreBoardLastRound = scrauchLogic
 					.getLastRoundScoreBoard(userStage.getGameCode(data.getUserId()));
 			HtmlData htmlData = new HtmlData(data.getUserId(), UserStageMonitor.LAST_ROUND_SCORES, scoreBoardLastRound);
 			Application.logger.info(htmlData);
@@ -350,7 +350,7 @@ public class DataHandlers {
 			break;
 		}
 		case SCORES_ENDPOINT: {
-			Map<PlayerPersonalInfo, Integer> scoreBoardTotal = scrouchLogic
+			Map<PlayerPersonalInfo, Integer> scoreBoardTotal = scrauchLogic
 					.getTotalScoreBoard(userStage.getGameCode(data.getUserId()));
 			Application.logger.info("user " + data.getUserId() + " inserted scores handler");
 			switch (userStage.getStage(data.getUserId())) {
@@ -363,7 +363,7 @@ public class DataHandlers {
 			}
 			case UserStageMonitor.TOTAL_SCORES: {
 				Application.logger.info("user " + data.getUserId() + " inserted total scores handler ");
-				int playersLeft = scrouchLogic.addPlayerSawScores(data.getUserId());
+				int playersLeft = scrauchLogic.addPlayerSawScores(data.getUserId());
 				HtmlData htmlData = new HtmlData(data.getUserId(), UserStageMonitor.WAITING_ROOM_SEE_RESULTS);
 				Application.logger.info(htmlData + ". left " + playersLeft + " players");
 				userStage.setStageData(data.getUserId(), htmlData);
@@ -388,7 +388,7 @@ public class DataHandlers {
 		case ANOTHER_GAME_ENDPOINT: {
 			Application.logger.info("user " + data.getUserId() + " inserted another game page ");
 			boolean decision = data.getDecision();
-			int playersLeft = scrouchLogic.addPlayerContinueChoice(data.getUserId(), decision);
+			int playersLeft = scrauchLogic.addPlayerContinueChoice(data.getUserId(), decision);
 			HtmlData htmlData = new HtmlData(data.getUserId(), UserStageMonitor.WAITING_ROOM_DECIDING);
 			Application.logger.info(htmlData);
 			userStage.setStageData(data.getUserId(), htmlData);
